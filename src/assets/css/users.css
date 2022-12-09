@@ -1,0 +1,103 @@
+.containerUser {
+  max-width: 112.1rem;
+  padding: 3.6rem;
+  margin: 0 auto;
+}
+.containerHeaderUsers {
+  max-width: 112.1rem;
+  margin: 0 auto;
+  margin-top: 3.2rem;
+}
+.titleUsers {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0rem;
+  gap: 50%;
+  margin-bottom: 1.6rem;
+}
+.space-text {
+  position: absolute;
+  width: 65%;
+  height: 0.1rem;
+  background: var(--gray300);
+}
+.containerSearch {
+  margin-top: 3.3rem;
+  display: flex;
+  flex-direction: row;
+  padding: 0rem;
+  justify-content: space-between;
+}
+.roundsButton {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+}
+
+.textLanguage {
+  gap: 10px;
+  font-family: var(--fontA);
+  font-style: normal;
+  font-weight: 700;
+  font-size: 1.4rem;
+  line-height: 2rem;
+  border: 0 #f3f4f6;
+  background: #f3f4f6;
+  outline: none;
+}
+
+
+.options {
+  /* gap: 10px; */
+  font-family: var(--fontA);
+  font-style: normal;
+  font-weight: 700;
+  font-size: 1.4rem;
+  line-height: 2rem;
+  border: 0 #f3f4f6;
+  background: #f3f4f6;
+}
+
+
+.contenedorThree {
+  /* display: flex;
+  flex-direction: row;
+  align-items: center; */
+  /*padding: 0rem 1rem 0rem 0rem;
+  *//*position: absolute;
+  *//*width: 11.3rem;
+  height: 3.2rem;
+  right: 8.3rem;
+  top: 1.6rem;
+  *//*background: #f3f4f6;*/
+}
+
+.iconStyles {
+  /* margin-left: 0.8rem;
+  margin-right: 0.8rem; */
+}
+
+.textOps {
+  gap: 10px;
+  font-family: var(--fontA);
+  font-style: normal;
+  font-weight: 700;
+  font-size: 1.4rem;
+  line-height: 2rem;
+  border: 0 #f3f4f6;
+  background: #f3f4f6;
+  outline: none;
+}
+
+.options {
+  /* gap: 10px; */
+  font-family: var(--fontA);
+  font-style: normal;
+  font-weight: 700;
+  font-size: 1.4rem;
+  line-height: 2rem;
+  border: 0 #f3f4f6;
+  /* background: #f3f4f6; */
+}

@@ -1,0 +1,6 @@
+.title {
+    font-family: var(--fontA);
+    font-size: var(--text-title);
+    font-style: normal;
+    font-weight: 700;
+}
