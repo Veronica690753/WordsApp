@@ -1,24 +1,23 @@
 import Avatar from "../../Avatar";
 import AvatarUsers from "../../AvatarUsers";
+import { RoundButton } from "../../Button/RoundButton/RoundButton";
+import TimeZone from "../../Typhography/TimeZone/";
 import { ColumnsProps } from "../interface";
 
 import styles from '../Table.module.css'
-import * as icons from 'phosphor-react'
-import { RoundButton } from "../../Button/RoundButton/RoundButton";
-import TimeZone from "../../Typhography/TimeZone";
 
-export const columns: ColumnsProps[] = [
+export const columns:ColumnsProps[] = [
     {
-        field: 'check',
-        headerName: 'check',
-        width: '5%',
-        renderCell: (params, action) => <input className={styles.input} type='checkbox' defaultChecked={params.check} onChange={(e) => action(e)} />
+        field:'check',
+        headerName:'check',
+        width:'5%',
+        renderCell: (params, action)=><input className={styles.input} type='checkbox' defaultChecked={params.check} onChange={(e)=>action(e)}/>
     },
     {
-        field: 'user',
-        headerName: 'User',
-        width: '25%',
-        renderCell: (params, action) => 
+        field:'user',
+        headerName:'User',
+        width:'25%',
+        renderCell: (params, action)=>
         <div className={styles.containerAvatar}>
             <AvatarUsers size='md' text={params.name}
                 backgroundColor='var(--teal500)'
@@ -27,34 +26,34 @@ export const columns: ColumnsProps[] = [
         </div>
     },
     {
-        field: 'phone',
-        headerName: 'Phone',
-        width: '20%',
-        renderCell: (params, action) => <p className={styles.styleBody}>{params.phone}</p>
+        field:'phone',
+        headerName:'Phone',
+        width:'19%',
+        renderCell: (params, action)=><p className={styles.styleBody}>{params.phone}</p>
     },
     {
-        field: 'birthday',
-        headerName: 'Birthday',
-        width: '12%',
-        renderCell: (params, action) => <p className={styles.styleBody}>{params.birthday}</p>
+        field:'birthday',
+        headerName:'Birthday',
+        width:'13%',
+        renderCell: (params, action)=><p className={styles.styleBody}>{params.birthday}</p>
     },
     {
-        field: 'language',
-        headerName: 'Language',
-        width: '15%',
-        renderCell: (params, action) => <p className={styles.styleBody}>{params.language}</p>
+        field:'language',
+        headerName:'Language',
+        width:'14%',
+        renderCell: (params, action)=><p className={styles.styleBody}>{params.language}</p>
     },
     {
-        field: 'Timezone',
-        headerName: 'Timezone',
-        width: '20%',
-        renderCell: (params, action) => <div className={styles.styleBody}><TimeZone size="md" time={params.time} zone={params.zone}/></div>
+        field:'Timezone',
+        headerName:'Timezone',
+        width:'23%',
+        renderCell: (params, action)=><div className={styles.styleBody}><TimeZone size="md" time={params.time} zone={params.zone}/></div>
     }
     ,
     {
-        field: 'actions',
-        headerName: '',
-        width: '5%',
-        renderCell: (params, action) => <div className={styles.containerButtons}><RoundButton iconName='DotsThree' /></div>
+        field:'actions',
+        headerName:'',
+        width:'3%',
+        renderCell: (params, action)=><div className={styles.containerAvatar}><RoundButton iconName='DotsThree'/></div>
     }
 ]

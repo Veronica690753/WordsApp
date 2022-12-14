@@ -24,7 +24,6 @@ ModalComponent.args = {
 		<ModalEditUser
 			size='md'
 			textHeader='Edit User'
-			backgroundColor='white'
 		/>,
 	isOpen: true,
 }

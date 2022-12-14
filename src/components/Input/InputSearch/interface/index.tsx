@@ -3,5 +3,6 @@ export interface InputSearchs {
 	type: 'button' | 'checkbox'|'text',
 	icon?: string,
 	text?: string,
-	eventHandler?: React.ChangeEventHandler<HTMLInputElement>
+	eventHandler?: React.ChangeEventHandler<HTMLInputElement>,
+	onChange: any,
 }

@@ -17,14 +17,8 @@ const TFooter =  <T extends object>({ range, setPage, page, slice, callBack, dat
             <div
                 className={styles.selectContainer}
             >
-                <p>Rows per page</p>
+                <p className={styles.textRowsPage}>Rows per page</p>
                 <select onChange={(e)=>callBack(Number(e.target.value))} className={styles.numFooter}>
-                    <option>
-                        1
-                    </option>
-                    <option>
-                        3
-                    </option>
                     <option>
                         5
                     </option>
@@ -34,32 +28,30 @@ const TFooter =  <T extends object>({ range, setPage, page, slice, callBack, dat
                     <option>
                         15
                     </option>
-                    <option>
-                        20
-                    </option>
                 </select>
             </div>
             <div className={styles.footerShowing}>
-                <p>{`Showing ${slice.length} of ${data.length} Results`}</p>
+                <p className={styles.textShowing}>{`Showing ${slice.length} of ${data.length} Results`}</p>
             </div>
-            <div>
-                <button onClick={()=>setPage(page>1?(page-1):page)}>
-                    <CaretLeft/>
-                </button>
+            <div className={styles.stylePagination}>
+                <div onClick={()=>setPage(page>1?(page-1):page)}>
+                    <CaretLeft size={16} style={{color:'#E5E5E5'}}/>
+                </div>
                 {
                     range.map((el, index)=>(
-                        <button
-                        style={{background: el===page ? 'blue':'transparent'}}
+                        <div
+                        className={styles.numberPagination}
+                        style={{background: el===page ? '#F5F5F5':'transparent'}}
                             key={index}
                             onClick={()=>setPage(el)}
                         >
                             {el}
-                        </button>
+                        </div>
                     ))
                 }
-                <button onClick={()=>setPage(page<range.length?(page+1):page)}>
-                    <CaretRight/>
-                </button>
+                <div onClick={()=>setPage(page<range.length?(page+1):page)}>
+                    <CaretRight size={16} style={{color:'#A3A3A3'}}/>
+                </div>
             </div>
         </div>
     )

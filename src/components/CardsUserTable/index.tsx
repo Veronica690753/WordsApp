@@ -1,24 +1,14 @@
-import { ChangeEvent, ChangeEventHandler, useEffect, useState } from 'react';
+import Infoframe from '../Infoframe';
 import Avatar from '../Avatar/Avatar';
-import Tags from '../Infoframe/Infoframe';
-import styles from './CardUsers.module.css'
-import { CardTableProps } from './interface';
+import styles from './CardsUserTable.module.css'
+import { CardTableProps } from './interface/index';
 
-const CardsTable = ({ checked,hasCheckBox, email, name, onClick, phone, country }:CardTableProps ) => {
+const CardsTable = ({ checked, email, name, onClick, phone, country }:CardTableProps ) => {
 	
-	const [isChecked, setisChecked] = useState(checked)
-	const handlerCheck=(e:ChangeEvent<HTMLInputElement>)=>{
-		setisChecked(e.target.checked)
-	}
-	useEffect(() => {
-	  setisChecked(checked)
-	}, [checked])
-	
-
 	return (
 		<div className={styles.cardsContainer} >
 			<div className={styles.containerItems}>
-				{hasCheckBox ? <input type="checkbox" checked={isChecked} onChange={handlerCheck} className={styles.checked} /> : null}
+				{checked ? <input type="checkbox" className={styles.checked} /> : null}
 
 				<div className={styles.containerHeader}>
 					<Avatar
@@ -28,7 +18,7 @@ const CardsTable = ({ checked,hasCheckBox, email, name, onClick, phone, country 
 						text={name}
 					/>
 					<p className={styles.textName}>{name}</p>
-					<Tags
+					<Infoframe
 						icon="EnvelopeSimple"
 						size="md"
 						text={email}
@@ -38,14 +28,14 @@ const CardsTable = ({ checked,hasCheckBox, email, name, onClick, phone, country 
 				<div className={styles.line}></div>
 
 				<div className={styles.footer}>
-					<Tags
+					<Infoframe
 						icon="Phone"
 						size="md"
 						text={phone}
 						backgroundColor="var(--neutral500)"
 					/>
 					<br />
-					<Tags
+					<Infoframe
 						size="md"
 						text={country}
 						backgroundColor="var(--neutral500)"
@@ -62,5 +52,5 @@ CardsTable.defaultProps = {
 	email: 'juanito@gmail.com',
 	phone: '4272443402',
 	country: 'Mexico City (GTM-5)',
-	hasCheckBox: true,
+	checked: true,
 }

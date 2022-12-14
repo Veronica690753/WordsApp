@@ -1,28 +1,29 @@
 import { PencilSimple, User } from "phosphor-react";
-import styles from "./ModalEdit.module.css";
+import styles from "./ModalNewUser.module.css";
 import Avatar from "../../Avatar";
-import BasicBtn from "../../Button/BassicButton";
-import { useContext } from 'react';
+
 import { ModalContext } from '../index';
-import { ModalEditProps } from "./interface";
+import BasicBtn from "../../Button/BassicButton";
 import InputModal from "../../Input/InputModal";
+import { useContext } from "react";
+import { ModalNewProps } from "./interface";
 import ToggleButton from "../../Button/ToggleButton";
 
-const ModalEditUser = ({ size, textHeader }: ModalEditProps) => {
-const { setIsOpenModal } = useContext(ModalContext)
+const ModalNewUser = ({ size, textHeader }: ModalNewProps) => {
+
+  const { setIsOpenModal } = useContext(ModalContext)
 
   return (
-    <div className={`${styles[size]} ${styles.modalContainer}`}>
-        <div className={styles.containerTitle}>
-          <div className={styles.iconHeader}>
-            <User size="1.6rem" color="#F97316" />
-          </div>
-          <p className={styles.textHeader}>{textHeader}</p>
-          
+    <div className={`${styles[size]} ${styles.modalContainer}`} >
+      <div className={styles.containerTitle}>
+        <div className={styles.iconHeader}>
+          <User size="1.6rem" color="#F97316" />
         </div>
+        <p className={styles.textHeader}>{textHeader}</p>
+      </div>
       <div className={styles.separationHeader}></div>
       <div className={styles.typeUser}>
-        <div className={styles.textTypeUser }>
+        <div className={styles.textTypeUser}>
           What type of user do you want to create?
         </div>
         <ToggleButton values={['Admin','Editor']}/>
@@ -47,17 +48,8 @@ const { setIsOpenModal } = useContext(ModalContext)
               colorText="var(--neutral900)"
               text="Upload New Picture"
             />
-            <BasicBtn
-              size="sm"
-              backgroundColor="var(--red400)"
-              fontWeight={700}
-              borderColor="var(--red400)"
-              colorText="var(--white)"
-              text="Delete"
-            />
           </div>
         </div>
-
         <InputModal size="lg" type="text" text="Jose" textTitle="Name*" />
         <InputModal
           size="lg"
@@ -65,7 +57,6 @@ const { setIsOpenModal } = useContext(ModalContext)
           text="Ramirez"
           textTitle="Last Name*"
         />
-
         <div className={styles.containerBirthdayPhone}>
           <InputModal
             size="md"
@@ -81,7 +72,6 @@ const { setIsOpenModal } = useContext(ModalContext)
           />
         </div>
       </div>
-
       <div className={styles.accountInformation}>
         <p className={styles.title}>ACCOUNT INFORMATION</p>
         <InputModal
@@ -104,7 +94,10 @@ const { setIsOpenModal } = useContext(ModalContext)
         />
       </div>
       <div className={styles.separationFooter}></div>
-
+      <div className={styles.inputContainer}>
+      <input type="checkbox" className={styles.input} />
+      <p className={styles.textInput}>Create another User</p>
+      </div>
       <div className={styles.buttonFooter}>
         <BasicBtn
           onClick={() => setIsOpenModal(false)}
@@ -128,8 +121,8 @@ const { setIsOpenModal } = useContext(ModalContext)
   );
 };
 
-export default ModalEditUser;
+export default ModalNewUser;
 
-ModalEditUser.defaultProps = {
+ModalNewUser.defaultProps = {
   size: "md",
 };

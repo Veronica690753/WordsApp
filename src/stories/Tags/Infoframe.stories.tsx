@@ -25,7 +25,7 @@ InfoframeComponent.args={
     icon:'Phone',
     size:'md',
     onClick:handleClick,
-     backgroundColor:'var(--gray500)',
+    backgroundColor:'var(--gray500)',
     text:'isabella@bluepixel.mx'
     
 }

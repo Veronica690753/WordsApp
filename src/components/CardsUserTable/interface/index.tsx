@@ -4,7 +4,6 @@ export interface CardTableProps {
 	email?: string,
 	phone?: string,
 	country?: string,
-	hasCheckBox?: boolean,
-	checked?:boolean,
+	checked?: boolean,
 	onClick?: MouseEventHandler<HTMLDivElement>,
 }
