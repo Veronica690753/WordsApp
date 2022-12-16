@@ -62,5 +62,5 @@ CardsTable.defaultProps = {
 	email: 'juanito@gmail.com',
 	phone: '4272443402',
 	country: 'Mexico City (GTM-5)',
-	hasCheckBox: true,
+	hasCheckBox: false,
 }

@@ -47,7 +47,7 @@ export const columns:ColumnsProps[] = [
         field:'Timezone',
         headerName:'Timezone',
         width:'23%',
-        renderCell: (params, action)=><div className={styles.styleBody}><TimeZone size="md" time={params.time} zone={params.zone}/></div>
+        renderCell: (params, action)=><div className={styles.styleBody}><TimeZone size="md" time={params.timezone} zone={params.timezone}/></div>
     }
     ,
     {

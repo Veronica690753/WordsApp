@@ -2,18 +2,18 @@ import { CaretDown, PencilSimple } from 'phosphor-react'
 import React from 'react'
 import styles from './LanguageButton.module.css'
 import { Icon } from '../../Iconography/Icon';
-import { MX, EN } from '../../Iconography/Flags';
 import { MouseEventHandler, ReactElement } from 'react';
 
 interface LanguageProps {
   icon?: string,
   flag: string | ReactElement | ReactElement[],
-  onClick?: MouseEventHandler<HTMLDialogElement>
+  onClick?: MouseEventHandler<HTMLDivElement>
 }
 
-const LanguageButton = ({ icon, flag }: LanguageProps) => {
+const LanguageButton
+  = ({ icon, flag,onClick }: LanguageProps) => {
     return (
-      <div className={styles.contenedorLanguage}>
+      <div role='button' onClick={onClick} className={styles.contenedorLanguage}>
         <div className={styles.iconStyles}>
 
           <Icon size='1.8rem' color='var(--neutral500)' customIcon={flag} />
@@ -26,8 +26,10 @@ const LanguageButton = ({ icon, flag }: LanguageProps) => {
           <option className={styles.options} value='spanish' >Spanish</option>
           <option className={styles.options} value='other'>...</option>
         </select>
+
       </div>
+
     )
   }
 
-export default LanguageButton
+export default LanguageButton

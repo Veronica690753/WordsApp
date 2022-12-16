@@ -13,19 +13,36 @@ export interface ColumnsProps{
     actionsItem?: (params:Params, action:()=>void)=>ReactNode | ReactElement
 }
 
-export interface User {
-    auth0_id: null;
-    birthday: string;
-    email:    string;
-    id:       string;
-    image:    Image;
-    is_admin: boolean;
-    language: string;
-    lastname: string;
-    name:     string;
-    phone:    string;
-    time:     string;
-    zone:     string;
+// export interface User {
+//     auth0_id: null;
+//     birthday: string;
+//     email:    string;
+//     id:       string;
+//     image:    Image;
+//     is_admin: boolean;
+//     language: string;
+//     lastname: string;
+//     name:     string;
+//     phone:    string;
+//     time:     string;
+//     zone:     string;
+// }
+
+
+export interface User{
+    auth0_id?: string,
+    birthday?: string,
+    email?: string,
+    id?: string,
+    image?: string,
+    is_admin?: boolean,
+    language?: string,
+    lastname?: string,
+    middlename?: string,
+    name?: string,
+    phone?: string,
+    second_lastname?: string,
+    timezone?: string
 }
 
 export interface TableFooterProps <Data> { 

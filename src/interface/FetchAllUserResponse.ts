@@ -5,20 +5,23 @@
 //   const users = Convert.toUsers(json);
 
 export interface Users {
-    map(arg0: (user: User) => JSX.Element): import("react").ReactNode;
-    data: User[];
+    data: IUser[];
 }
 
-export interface User {
-    date_of_birth:    string;
-    email:            string;
-    first_name:       string;
-    id:               number;
-    id_auth0:         string;
-    last_name:        string;
-    second_last_name: string;
-    second_name:      string;
-    telephone:        string;
+export interface IUser {
+    birthday:       string;
+    email:          string;
+    name:           string;
+    id:             string;
+    id_auth0?:      string;
+    lastname:       string;
+    second_lastname: string;
+    middlename:     string;
+    phone:          string;
+    timezone:       string;
+    language:       string;
+    // is_admin:       boolean;
+    // image:          string;
 }
 
 // Converts JSON strings to/from your types
