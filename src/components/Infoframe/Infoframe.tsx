@@ -2,10 +2,10 @@ import { EnvelopeSimple, Flag} from 'phosphor-react';
 import styles from './Infoframe.module.css'
 import { Icon } from '../Iconography/Icon';
 import { MX } from '../Iconography/Flags';
-import { Infoframe } from './interface/Index';
+import { InfoframeProps } from './interface/Index';
 
 
-const Info = ({backgroundColor,size, text, icon}:Infoframe) => {
+const Infoframe = ({backgroundColor,size, text, icon}:InfoframeProps) => {
     
      
     return (
@@ -19,4 +19,4 @@ const Info = ({backgroundColor,size, text, icon}:Infoframe) => {
     )
 }
 
-export default Info
+export default Infoframe

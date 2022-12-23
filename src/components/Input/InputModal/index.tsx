@@ -1,22 +1,24 @@
 import { InputsModalsProps } from './interface/index';
 import styles from './InputModal.module.css'
 
-export const InputModal = ({ textTitle, size, type, eventHandler, onChange, text, name, value }: InputsModalsProps) => {
+export const InputModal = ({ textTitle, size, type, placeholder, onChange, text, name, value, defaultValue }: InputsModalsProps) => {
 	return (
 		<div>
 			<p className={`${styles.textTitle}`}>{textTitle}</p>
 			<div className={`${styles[size]} ${styles.borders}`}>
-				<input className={`${styles.contenido}`} type={type} value={value} name={name} onChange={onChange} placeholder={text} />
+				<input className={`${styles.contenido}`} type={type} 
+				defaultValue={defaultValue} 
+				value={value} name={name} onChange={onChange} 
+				placeholder={placeholder} />
 			</div>
 		</div>
-
 	)
 }
 
 export default InputModal
 InputModal.defaultProps = {
 	type: 'text',
-	text: 'User@email.com',
+	placeholder: 'User@email.com',
 	size: 'lg',
 	textTitle: 'Email*'
 }

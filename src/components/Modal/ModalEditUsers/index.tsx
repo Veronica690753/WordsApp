@@ -2,30 +2,66 @@ import { PencilSimple, User } from "phosphor-react";
 import styles from "./ModalEdit.module.css";
 import Avatar from "../../Avatar";
 import BasicBtn from "../../Button/BassicButton";
-import { useContext } from 'react';
+import { ChangeEvent, useContext, useEffect, useState } from 'react';
 import { ModalContext } from '../index';
-import { ModalEditProps } from "./interface";
+import { EditProps, ModalEditProps } from "./interface";
 import InputModal from "../../Input/InputModal";
 import ToggleButton from "../../Button/ToggleButton";
+import { updateUserData } from "../../../hooks/useUsers";
+import { InputSelectTime } from "../../Input/InputModal/InputSelectType";
+import { InputSelectIdiom } from "../../Input/InputModal/InputSelectIdiom";
+import { TableContext } from "../../../pages/UsersPage";
 
-const ModalEditUser = ({ size, textHeader }: ModalEditProps) => {
-const { setIsOpenModal } = useContext(ModalContext)
+const initialValue = {
+  birthday: '',
+  auth0_id: '',
+  email: '',
+  id: '',
+  language: '',
+  lastname: '',
+  middlename: '',
+  name: '',
+  phone: '',
+  second_lastname: '',
+  timezone: '',
+  image: '',
+  is_admin: false
+}
+
+const ModalEditUser = ({ size, textHeader, user: originalUser = initialValue }: ModalEditProps) => {
+  const [ userData, setUser ] = useState<EditProps>({ user: originalUser })
+  const { setIsOpenModalEditUser } = useContext(TableContext)
+  const { mutate } = updateUserData()
+
+  function handleChange(e: ChangeEvent<HTMLInputElement>) {
+    setUser(
+      { user: { ...userData.user, [e.target.name]: e.target.value } }
+    )
+  }
+
+  useEffect(() => setUser(_ => userData), [userData])
+
+  function handleSubmit() {
+    mutate(userData)
+    setUser({ user: initialValue })
+    setIsOpenModalEditUser(false)
+  }
 
   return (
     <div className={`${styles[size]} ${styles.modalContainer}`}>
-        <div className={styles.containerTitle}>
-          <div className={styles.iconHeader}>
-            <User size="1.6rem" color="#F97316" />
-          </div>
-          <p className={styles.textHeader}>{textHeader}</p>
-          
+      <div className={styles.containerTitle}>
+        <div className={styles.iconHeader}>
+          <User size="1.6rem" color="#F97316" />
         </div>
+        <p className={styles.textHeader}>{textHeader}</p>
+
+      </div>
       <div className={styles.separationHeader}></div>
       <div className={styles.typeUser}>
-        <div className={styles.textTypeUser }>
+        <div className={styles.textTypeUser}>
           What type of user do you want to create?
         </div>
-        <ToggleButton values={['Admin','Editor']}/>
+        <ToggleButton values={['Admin', 'Editor']} />
       </div>
       <div className={styles.containerPersonalInformation}>
         <div className={styles.personalInfoText}>
@@ -58,26 +94,47 @@ const { setIsOpenModal } = useContext(ModalContext)
           </div>
         </div>
 
-        <InputModal size="lg" type="text" text="Jose" textTitle="Name*" />
+        <InputModal
+          onChange={handleChange}
+          size="lg"
+          type="text"
+          // defaultValue={originalUser.name}
+          textTitle="Name*"
+          name='name'
+          placeholder="Jose"
+          value={userData.user.name}
+        />
         <InputModal
           size="lg"
           type="text"
-          text="Ramirez"
           textTitle="Last Name*"
+          onChange={handleChange}
+          // defaultValue={originalUser.lastname}
+          name='lastname'
+          placeholder="Lopez"
+          value={userData.user.lastname}
         />
 
         <div className={styles.containerBirthdayPhone}>
           <InputModal
             size="md"
             type="date"
-            text="Ramirez"
             textTitle="Birthday"
+            onChange={handleChange}
+            // defaultValue={originalUser.birthday}
+            name='birthday'
+            placeholder='22 Nov 1990'
+            value={userData.user.birthday}
           />
           <InputModal
             size="md"
             type="text"
-            text="(442) 212 2365"
             textTitle="Phone number*"
+            onChange={handleChange}
+            // defaultValue={originalUser.phone}
+            name='phone'
+            placeholder='(442) 212 2365'
+            value={userData.user.phone}
           />
         </div>
       </div>
@@ -87,27 +144,36 @@ const { setIsOpenModal } = useContext(ModalContext)
         <InputModal
           size="lg"
           type="text"
-          text="joss.ramirez@company.mx"
           textTitle="Email*"
+          onChange={handleChange}
+          // defaultValue={originalUser.email}
+          name='email'
+          placeholder='joss.reamirez@company.mx'
+          value={userData.user.email}
         />
-        <InputModal
-          size="lg"
-          type="text"
-          text="Mexico City (GMT-5)"
-          textTitle="Timezone"
+        <InputSelectTime
+          onChange={handleChange}
+          name='timezone'
+          // defaultValue={originalUser.timezone}
+          size='xl'
+          textTitle='Time Zone'
+          value={userData.user.timezone}
         />
-        <InputModal
-          size="md"
-          type="text"
-          text="Mexico City (GMT-5)"
-          textTitle="Spanish"
+
+        <InputSelectIdiom
+          onChange={handleChange}
+          name='language'
+          // defaultValue={originalUser.language}
+          size='xl'
+          textTitle='Language'
+          value={userData.user.language}
         />
       </div>
       <div className={styles.separationFooter}></div>
 
       <div className={styles.buttonFooter}>
         <BasicBtn
-          onClick={() => setIsOpenModal(false)}
+          onClick={() => setIsOpenModalEditUser(false)}
           size="sm"
           backgroundColor="white"
           fontWeight={700}
@@ -122,6 +188,7 @@ const { setIsOpenModal } = useContext(ModalContext)
           borderColor="var(--celeste700)"
           colorText="var(--white)"
           text="Save"
+          onClick={handleSubmit}
         />
       </div>
     </div>

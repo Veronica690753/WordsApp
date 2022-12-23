@@ -9,19 +9,19 @@ export interface Users {
 }
 
 export interface IUser {
-    birthday:       string;
-    email:          string;
-    name:           string;
-    id:             string;
-    id_auth0?:      string;
-    lastname:       string;
-    second_lastname: string;
-    middlename:     string;
-    phone:          string;
-    timezone:       string;
-    language:       string;
-    // is_admin:       boolean;
-    // image:          string;
+    auth0_id?: string,
+    birthday: string,
+    email?: string,
+    id: string,
+    image?: string,
+    is_admin?: boolean,
+    language?: string,
+    lastname?: string,
+    middlename?: string,
+    name?: string,
+    phone: string,
+    second_lastname?: string,    
+    timezone?: string
 }
 
 // Converts JSON strings to/from your types

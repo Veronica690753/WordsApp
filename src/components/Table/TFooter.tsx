@@ -4,7 +4,7 @@ import { TableFooterProps } from './interface'
 
 import styles from './Table.module.css'
 
-const TFooter =  <T extends object>({ range, setPage, page, slice, callBack, data }:TableFooterProps<T>) => {
+const TFooter = <T extends object>({ range, setPage, page, slice, callBack, data }: TableFooterProps<T>) => {
 
     useEffect(() => {
         if (slice.length < 1 && page !== 1) {
@@ -14,16 +14,14 @@ const TFooter =  <T extends object>({ range, setPage, page, slice, callBack, dat
 
     return (
         <div className={styles.footerContainer}>
-            <div
-                className={styles.selectContainer}
-            >
+            <div className={styles.selectContainer}>
                 <p className={styles.textRowsPage}>Rows per page</p>
-                <select onChange={(e)=>callBack(Number(e.target.value))} className={styles.numFooter}>
+                <select onChange={(e) => callBack(Number(e.target.value))} className={styles.numFooter}>
                     <option>
                         5
                     </option>
                     <option>
-                        10 
+                        10
                     </option>
                     <option>
                         15
@@ -34,23 +32,23 @@ const TFooter =  <T extends object>({ range, setPage, page, slice, callBack, dat
                 <p className={styles.textShowing}>{`Showing ${slice.length} of ${data.length} Results`}</p>
             </div>
             <div className={styles.stylePagination}>
-                <div onClick={()=>setPage(page>1?(page-1):page)}>
-                    <CaretLeft size={16} style={{color:'#E5E5E5'}}/>
+                <div onClick={() => setPage(page > 1 ? (page - 1) : page)}>
+                    <CaretLeft size={16} style={{ color: '#E5E5E5' }} />
                 </div>
                 {
-                    range.map((el, index)=>(
+                    range.map((el, index) => (
                         <div
-                        className={styles.numberPagination}
-                        style={{background: el===page ? '#F5F5F5':'transparent'}}
+                            className={styles.numberPagination}
+                            style={{ background: el === page ? '#F5F5F5' : 'transparent' }}
                             key={index}
-                            onClick={()=>setPage(el)}
+                            onClick={() => setPage(el)}
                         >
                             {el}
                         </div>
                     ))
                 }
-                <div onClick={()=>setPage(page<range.length?(page+1):page)}>
-                    <CaretRight size={16} style={{color:'#A3A3A3'}}/>
+                <div onClick={() => setPage(page < range.length ? (page + 1) : page)}>
+                    <CaretRight size={16} style={{ color: '#A3A3A3' }} />
                 </div>
             </div>
         </div>

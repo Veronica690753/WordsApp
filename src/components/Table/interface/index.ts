@@ -5,44 +5,28 @@ export type Params = {
 }
 
 
-export interface ColumnsProps{
-    field:string,
-    headerName:string,
-    width:string | number,
-    renderCell?: (params:Params, action:(e?:ChangeEvent<HTMLInputElement>)=>void)=>ReactNode | ReactElement
-    actionsItem?: (params:Params, action:()=>void)=>ReactNode | ReactElement
+export interface ColumnsProps {
+    field: string,
+    headerName: string,
+    width: string | number,
+    renderCell?: (params: Params, action: (e?: ChangeEvent<HTMLInputElement>, user?: User) => void) => ReactNode | ReactElement
+    actionsItem?: (params: Params, action: (e?: ChangeEvent<HTMLInputElement>, user?: User) => void) => ReactNode | ReactElement
 }
 
-// export interface User {
-//     auth0_id: null;
-//     birthday: string;
-//     email:    string;
-//     id:       string;
-//     image:    Image;
-//     is_admin: boolean;
-//     language: string;
-//     lastname: string;
-//     name:     string;
-//     phone:    string;
-//     time:     string;
-//     zone:     string;
-// }
-
-
 export interface User{
-    auth0_id?: string,
-    birthday?: string,
-    email?: string,
-    id?: string,
-    image?: string,
-    is_admin?: boolean,
-    language?: string,
-    lastname?: string,
-    middlename?: string,
-    name?: string,
-    phone?: string,
-    second_lastname?: string,
-    timezone?: string
+    auth0_id: string,
+    birthday: string,
+    email: string,
+    id: string,
+    image: string,
+    is_admin: boolean,
+    language: string,
+    lastname: string,
+    middlename: string,
+    name: string,
+    phone: string,
+    second_lastname: string,    
+    timezone: string
 }
 
 export interface TableFooterProps <Data> { 

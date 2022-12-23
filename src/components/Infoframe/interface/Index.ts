@@ -1,7 +1,7 @@
 import { MouseEventHandler } from "react";
 
 
-export interface Infoframe {
+export interface InfoframeProps {
     size: 'sm' | 'md' | 'lg' | 'xl',
     backgroundColor?: string,
     icon?:string,

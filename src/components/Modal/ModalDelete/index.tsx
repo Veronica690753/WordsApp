@@ -1,14 +1,51 @@
+import { ChangeEvent, useContext, useState } from 'react'
+import { ModalContext } from '..'
+import { deleteUserData } from '../../../hooks/useUsers'
+import { IUser } from '../../../interface/FetchAllUserResponse'
 import BasicBtn from '../../Button/BassicButton'
 import styles from './ModalDelete.module.css'
 
 
 interface ModalDeleteProps {
-	title: string,
-	body: string,
-	text: string,
+	title?: string,
+	body?: string
 }
 
-export const ModalDelete = ({ title, body, text}: ModalDeleteProps) => {
+
+
+export const ModalDelete = ({ title, body}: ModalDeleteProps) => {
+
+	const initialValue = {
+		birthday: '',
+		auth0_id: '',
+		email: '',
+		id: '',
+		language: '',
+		lastname: '',
+		middlename: '',
+		name: '',
+		phone: '',
+		second_lastname: '',
+		timezone: '',
+		image: '',
+		is_admin: false
+	  }
+	
+		const [user, setUser] = useState<IUser>(initialValue)
+		const { setIsOpenModal } = useContext(ModalContext)
+	
+		const { mutate } = deleteUserData()
+		function handleChange(e: ChangeEvent<HTMLInputElement>) {
+			setUser(
+				{ ...user, [e.target.id]: e.target.value }
+			)
+		}
+		function handleSubmit() {
+			mutate(user)
+			setUser(initialValue)
+			setIsOpenModal(false)
+		}
+
 	return (
 		<div className={styles.content}>
 			<div className={styles.border}>
@@ -20,6 +57,7 @@ export const ModalDelete = ({ title, body, text}: ModalDeleteProps) => {
 			<div className={styles.border2}>
 
 				<BasicBtn
+				onClick={() => setIsOpenModal(false)}
 					size='sm'
 					text='Cancel'
 					fontWeight={700}
@@ -34,6 +72,7 @@ export const ModalDelete = ({ title, body, text}: ModalDeleteProps) => {
 					backgroundColor='var(--red400)'
 					borderColor='var(--red400)'
 					colorText='var(--white)'
+					onClick={handleSubmit}
 				/>
 
 

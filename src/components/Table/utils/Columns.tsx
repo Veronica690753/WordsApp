@@ -1,17 +1,17 @@
-import Avatar from "../../Avatar";
 import AvatarUsers from "../../AvatarUsers";
-import { RoundButton } from "../../Button/RoundButton/RoundButton";
-import TimeZone from "../../Typhography/TimeZone/";
-import { ColumnsProps } from "../interface";
-
+import { CheckBox } from "../../Button/CheckBox/CheckBox";
+import { ModalRoundButton } from "../../Button/ModalButton";
+import TimeZone from "../../Typhography/TimeZone";
+import { ColumnsProps, User } from "../interface/index";
 import styles from '../Table.module.css'
+
 
 export const columns:ColumnsProps[] = [
     {
-        field:'check',
-        headerName:'check',
-        width:'5%',
-        renderCell: (params, action)=><input className={styles.input} type='checkbox' defaultChecked={params.check} onChange={(e)=>action(e)}/>
+        field: 'check',
+        headerName: 'check',
+        width: '5%',
+        renderCell: (params, action) => <CheckBox user={params as User} onChange={(e) => action(e, params as User)} defaultChecked={params.check} />
     },
     {
         field:'user',
@@ -29,31 +29,40 @@ export const columns:ColumnsProps[] = [
         field:'phone',
         headerName:'Phone',
         width:'19%',
-        renderCell: (params, action)=><p className={styles.styleBody}>{params.phone}</p>
+        renderCell: (params, action)=>
+        <p className={styles.styleBody}>{params.phone}</p>
     },
     {
         field:'birthday',
         headerName:'Birthday',
         width:'13%',
-        renderCell: (params, action)=><p className={styles.styleBody}>{params.birthday}</p>
+        renderCell: (params, action)=>
+        <p className={styles.styleBody}>{params.birthday}</p>
     },
     {
         field:'language',
         headerName:'Language',
         width:'14%',
-        renderCell: (params, action)=><p className={styles.styleBody}>{params.language}</p>
+        renderCell: (params, action)=>
+        <p className={styles.styleBody}>{params.language}</p>
     },
     {
         field:'Timezone',
         headerName:'Timezone',
         width:'23%',
-        renderCell: (params, action)=><div className={styles.styleBody}><TimeZone size="md" time={params.timezone} zone={params.timezone}/></div>
+        renderCell: (params, action)=>
+        <div className={styles.styleBody}>
+            <TimeZone size="md" time={params.timezone} 
+            zone={params.timezone}/>
+        </div>
     }
     ,
     {
-        field:'actions',
-        headerName:'',
-        width:'3%',
-        renderCell: (params, action)=><div className={styles.containerAvatar}><RoundButton iconName='DotsThree'/></div>
+        field: 'actions',
+        headerName: '',
+        width: '3%',
+        renderCell: (params, action) => 
+        <div className={styles.containerAvatar}>
+            <ModalRoundButton user={params as User} iconName='DotsThree' /></div>
     }
 ]
