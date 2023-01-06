@@ -1,4 +1,4 @@
-import { PencilSimple, User } from "phosphor-react";
+import { PencilSimple, User, X } from "phosphor-react";
 import styles from "./ModalEdit.module.css";
 import Avatar from "../../Avatar";
 import BasicBtn from "../../Button/BassicButton";
@@ -10,7 +10,7 @@ import ToggleButton from "../../Button/ToggleButton";
 import { updateUserData } from "../../../hooks/useUsers";
 import { InputSelectTime } from "../../Input/InputModal/InputSelectType";
 import { InputSelectIdiom } from "../../Input/InputModal/InputSelectIdiom";
-import { TableContext } from "../../../pages/UsersPage";
+import { TableContext } from "../../../context/TableContext";
 
 const initialValue = {
   birthday: '',
@@ -24,44 +24,59 @@ const initialValue = {
   phone: '',
   second_lastname: '',
   timezone: '',
-  image: '',
-  is_admin: false
+  // image: '',
+  is_admin: true
 }
 
-const ModalEditUser = ({ size, textHeader, user: originalUser = initialValue }: ModalEditProps) => {
-  const [ userData, setUser ] = useState<EditProps>({ user: originalUser })
-  const { setIsOpenModalEditUser } = useContext(TableContext)
+const ModalEditUser = ({ size, textHeader, user: originalUser }: ModalEditProps) => {
+  const [ userData, setUser ] = useState<EditProps>({ user: originalUser ?? initialValue})
+  const { setIsOpenModalEditUser, state } = useContext(TableContext)
   const { mutate } = updateUserData()
-
+  //  console.log(originalUser);
+   
   function handleChange(e: ChangeEvent<HTMLInputElement>) {
     setUser(
       { user: { ...userData.user, [e.target.name]: e.target.value } }
     )
   }
 
-  useEffect(() => setUser(_ => userData), [userData])
+  useEffect(() => setUser({user: originalUser ?? initialValue})
+  , [state.isOpenModalEditUser])
 
-  function handleSubmit() {
+  function handleSubmit() {    
     mutate(userData)
     setUser({ user: initialValue })
     setIsOpenModalEditUser(false)
   }
 
+  function handleTypeUserChange({isActive}:{isActive: boolean}){
+    console.log('handleType',isActive);
+    setUser({user: {...userData.user, is_admin: isActive}})
+    
+  }
+
+
   return (
     <div className={`${styles[size]} ${styles.modalContainer}`}>
-      <div className={styles.containerTitle}>
-        <div className={styles.iconHeader}>
-          <User size="1.6rem" color="#F97316" />
+      <div className={styles.headerTitle}>
+        <div className={styles.containerTitle}>
+          <div className={styles.iconHeader}>
+            <User size="1.6rem" color="#F97316" />
+          </div>
+          <p className={styles.textHeader}>{textHeader}</p>
         </div>
-        <p className={styles.textHeader}>{textHeader}</p>
-
-      </div>
+            <div className={styles.closeIcon}>
+            <X size='2.8rem' onClick={() => setIsOpenModalEditUser(false)} />
+            </div>
+        </div>
       <div className={styles.separationHeader}></div>
       <div className={styles.typeUser}>
         <div className={styles.textTypeUser}>
           What type of user do you want to create?
         </div>
-        <ToggleButton values={['Admin', 'Editor']} />
+        <div className={styles.toggleUser}>
+          <ToggleButton values={['Admin', 'Editor']} onChange={handleTypeUserChange}/>
+          </div>
       </div>
       <div className={styles.containerPersonalInformation}>
         <div className={styles.personalInfoText}>
@@ -98,7 +113,7 @@ const ModalEditUser = ({ size, textHeader, user: originalUser = initialValue }: 
           onChange={handleChange}
           size="lg"
           type="text"
-          // defaultValue={originalUser.name}
+          // defaultValue={originalUser?.name}
           textTitle="Name*"
           name='name'
           placeholder="Jose"
@@ -109,7 +124,6 @@ const ModalEditUser = ({ size, textHeader, user: originalUser = initialValue }: 
           type="text"
           textTitle="Last Name*"
           onChange={handleChange}
-          // defaultValue={originalUser.lastname}
           name='lastname'
           placeholder="Lopez"
           value={userData.user.lastname}
@@ -120,8 +134,8 @@ const ModalEditUser = ({ size, textHeader, user: originalUser = initialValue }: 
             size="md"
             type="date"
             textTitle="Birthday"
+            subText=" (Optional)"
             onChange={handleChange}
-            // defaultValue={originalUser.birthday}
             name='birthday'
             placeholder='22 Nov 1990'
             value={userData.user.birthday}
@@ -131,7 +145,6 @@ const ModalEditUser = ({ size, textHeader, user: originalUser = initialValue }: 
             type="text"
             textTitle="Phone number*"
             onChange={handleChange}
-            // defaultValue={originalUser.phone}
             name='phone'
             placeholder='(442) 212 2365'
             value={userData.user.phone}
@@ -146,15 +159,14 @@ const ModalEditUser = ({ size, textHeader, user: originalUser = initialValue }: 
           type="text"
           textTitle="Email*"
           onChange={handleChange}
-          // defaultValue={originalUser.email}
           name='email'
           placeholder='joss.reamirez@company.mx'
           value={userData.user.email}
+          disabled={true}
         />
         <InputSelectTime
           onChange={handleChange}
           name='timezone'
-          // defaultValue={originalUser.timezone}
           size='xl'
           textTitle='Time Zone'
           value={userData.user.timezone}
@@ -163,7 +175,6 @@ const ModalEditUser = ({ size, textHeader, user: originalUser = initialValue }: 
         <InputSelectIdiom
           onChange={handleChange}
           name='language'
-          // defaultValue={originalUser.language}
           size='xl'
           textTitle='Language'
           value={userData.user.language}

@@ -5,7 +5,7 @@
 
 .md {
   width: 65rem;
-  height: 98.8rem;
+  height: 110.3rem;
 }
 
 .xl {
@@ -57,7 +57,6 @@
   padding: 0.8rem;
   border-radius: 50%;
   background: #ffedd5;
-
   width: 3.2rem;
   height: 3.2rem;
 }
@@ -68,7 +67,8 @@
   height: 0rem;
   left: 0rem;
   top: 1.6rem;
-  border: 1px solid #e5e5e5;
+  border: 0.5px solid var(--neutral200);
+  background-color: var(--neutral200);
 }
 
 .typeUser {
@@ -89,6 +89,10 @@
   font-size: 1.4rem;
   line-height: 1.9rem;
   color: #262626;
+}
+.toggleUser{
+  margin-top: 26px;
+  margin-right: 7px;
 }
 
 .containerPersonalInformation {
@@ -177,7 +181,8 @@
   width: 100%;
   height: 0rem;
   left: 0rem;
-  border: 1px solid var(--neutral200);
+  border: 0.5px solid var(--neutral200);
+  background-color: var(--neutral200);
 }
 
 .buttonFooter {
@@ -187,8 +192,10 @@
   gap: 0.8rem;
   position: absolute;
   width: 16.5rem;
-  right: 2.4rem;
-  bottom: 1.7rem;
+  right: 4.5rem;
+  bottom: 1.6rem;
+
+  bottom: 1.6rem;
 }
 
 .inputContainer {
@@ -227,4 +234,22 @@
   font-size: 1.4rem;
   line-height: 1.9rem;
   color: var(--neutral800);
+}
+
+.headerTitle{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+.closeIcon{
+  margin-top: 2rem;
+  margin-left: 45rem;
+  margin-right: 29.25px;
+  color: var(--neutral500);
+  cursor: pointer;
+}
+.closeIcon:hover{
+  color: var(--orange500);
+  cursor: pointer;
 }

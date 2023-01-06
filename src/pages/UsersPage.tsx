@@ -17,60 +17,52 @@ import { getUsersData, getUsersDataCards } from "../hooks/useUsers";
 import { User } from "../components/Table/interface";
 import { ModalDelete } from "../components/Modal/ModalDelete";
 import { BtnDeleteUser } from "../components/Button/ButtonDeleteUser/ButtonDeleteUser";
-
-interface TableContextProps {
-  currentUser: User | undefined,
-  setCurrentUser: React.Dispatch<React.SetStateAction<User | undefined>>,
-  isOpenModalEditUser: boolean,
-  setIsOpenModalEditUser: React.Dispatch<React.SetStateAction<boolean>>
-  deleteUser: User | undefined
-  setDeleteUser: React.Dispatch<React.SetStateAction<User | undefined>>,
-}
-
-export const TableContext = createContext<TableContextProps>({} as TableContextProps)
-const TableProvider = TableContext.Provider
+import { TableContext } from "../context/TableContext";
+import { MessageNewUser } from "../components/Messages/MessageNewUser/MessageNewUser";
 
 export const UsersPage = () => {
-  
-  const [isOpenModalEditUser, setIsOpenModalEditUser] = useState(false)
-  const [OpenModalDeleteUser, setOpenModalDeleteUser] = useState(false)
-  const [deleteUser, setDeleteUser] = useState<User>()
-  const [currentUser, setCurrentUser] = useState<User>()
-  // const { data } = getUsersDataCards();
-  const { isAuthenticated } = useAuth0();
+  const { state } = useContext(TableContext)
+  const { deleteUser } = state
   const { isReady } = useContext(Context);
   const [isOpenModalNewUser, setOpenModalNewUser] = useState(false)
+  const [Message, setMessage] = useState(false)
+  const [OpenModalDeleteUser, setOpenModalDeleteUser] = useState(false)
   const [show, setShow] = useState(true);
   const [checkAll, setcheckAll] = useState(false)
+  const { isAuthenticated } = useAuth0();
+  const { data, isLoading } = getUsersDataCards();
+  const [successModal, setsuccessModal] = useState<{success: boolean, message: string}>()
 
-  const { data, isLoading, error, isError, isFetching } = getUsersData()
+  const handleSuccessModal = (success: boolean, message: string)=> {
+    setsuccessModal({success, message})
+  }
   
   useEffect(() => {
-    console.log(setIsOpenModalEditUser)
-  }, [isOpenModalEditUser])
-  
-  if (!isReady || isLoading ) {
+    !isOpenModalNewUser
+      ?
+      null
+      :
+      setMessage(true)
+  }, [isOpenModalNewUser])
+
+  useEffect(() => {
+  }, [show]);
+
+  if (!isReady) {
     return <></>;
   }
-  console.log(data)
-
+  
   return (
-    <TableProvider 
-    value={{ currentUser, 
-    setCurrentUser, 
-    isOpenModalEditUser, 
-    setIsOpenModalEditUser, 
-    deleteUser, 
-    setDeleteUser, }}>
-    <div className={styles.floatingBtn}>
-    
-    </div>
-    <div style={{ backgroundColor: "#F8FAFC" }}>
-      <div className={styles.containerUser}>
-        <div className={styles.containerHeaderUsers}>
-          <div className={styles.titleUsers}>
-            <H2 variant="bold">Users</H2>
-            <BasicBtn
+    <>
+      <div className={styles.floatingBtn}>
+
+      </div>
+      <div style={{ backgroundColor: "#F8FAFC" }}>
+        <div className={styles.containerUser}>
+          <div className={styles.containerHeaderUsers}>
+            <div className={styles.titleUsers}>
+              <H2 variant="bold">Users</H2>
+              <BasicBtn
                 size="md"
                 fontWeight={700}
                 backgroundColor="var(--celeste700)"
@@ -78,49 +70,65 @@ export const UsersPage = () => {
                 text="New User"
                 onClick={() => { setOpenModalNewUser(true) }}
               />
-          </div>
-          <div className={styles.spaceText}></div>
-        </div>
-        <div className={styles.containerSearch}>
-          <InputSearch
-            size="md"
-            type="text"
-            text="Search Users by name or keyword..."
-            icon="MagnifyingGlass"
-            onChange={() => {}}
-          />
-          <div className={styles.trashBtn}>
-              {
-                deleteUser && <BtnDeleteUser iconName="Trash" onClick={() => setOpenModalDeleteUser(true)} />
-              }
             </div>
-          <div className={styles.roundsButton}>
-          {/* {deleteUser && <RoundBtn iconName="Trash" />} */}
-            {
-            show
-            ?
-            null:
-            <SelectAll isChecked={(checked)=>setcheckAll(checked)}/>
-          }
-            <RoundBtn iconName="ListBullets" onClick={() => setShow(true)} />
+            <div className={styles.spaceText}></div>
+          </div>
+          <div className={styles.containerSearch}>
+            <InputSearch
+              size="md"
+              background="var(--slate100)"
+              type="text"
+              text="Search Users by name or keyword..."
+              icon="MagnifyingGlass"
+              onChange={() => { }}
+            />
+            <div className={styles.roundsButton}>
+              {
+                deleteUser?.id && <BtnDeleteUser iconName="Trash" onClick={() => setOpenModalDeleteUser(true)} />
+
+              }
+              {
+                show
+                  ?
+                  null :
+                  <SelectAll isChecked={(checked) => setcheckAll(checked)} />
+              }
+              <RoundBtn
+                iconName="ListDashes"
+                onClick={() => setShow(true)}
+                weight="regular"
+                height={2}
+                width={2}
+                padding={0.6}
+              />
               <RoundBtn
                 iconName="SquaresFour"
                 onClick={(show) => setShow(!show)}
+                weight="regular"
+                height={2}
+                width={2}
+                padding={0.6}
               />
-            <div style={{ marginLeft: 24 }}>
-              <RoundBtn iconName="DotsThree" />
+              <div style={{ marginLeft: 24 }}>
+                <RoundBtn
+                  iconName="DotsThree"
+                  weight="bold"
+                  height={3}
+                  width={3}
+                  padding={0.1}
+                />
+              </div>
             </div>
           </div>
-        </div>
 
-        {show ? (
+          {show ? (
             <div className={styles.containerTable}>
-              <Table data={data}/>
+              <Table />
             </div>
           ) : (
             <div className={styles.containerCard}>
-              {data! &&
-                data.map((item: User) => (
+              {data &&
+                data.list.map((item: User) => (
                   <CardsTable
                     key={item.id}
                     checked={checkAll}
@@ -132,25 +140,33 @@ export const UsersPage = () => {
                 ))}
             </div>
           )}
-        
+        </div>
       </div>
-      
-      
-    </div>
-    <Modal callback={(Open) => setOpenModalNewUser(Open)} isOpen={isOpenModalNewUser} >
+
+      <Modal callback={(Open) => setOpenModalNewUser(Open)} isOpen={isOpenModalNewUser} >
         <ModalNewUser
           size='md'
           textHeader='New User'
+          onSuccess={handleSuccessModal}
         />
-    </Modal>
-    <Modal callback={(Open) => setOpenModalDeleteUser(Open)} isOpen={OpenModalDeleteUser}>
+      </Modal>
+      {
+        successModal?.success &&
+        <MessageNewUser 
+        message={successModal.message}
+        onClick={()=>{setsuccessModal({success: false, message:''})}}/> //resetear el estado
+      }
+
+
+      <Modal callback={(Open) => setOpenModalDeleteUser(Open)} isOpen={OpenModalDeleteUser}>
         <div className={styles.deleteModal}>
           <ModalDelete
             title='Delete Users'
             body='The users you selected will be permanently deleted, do you want to continue?'
+            user={deleteUser}
           />
         </div>
       </Modal>
-</TableProvider>
+    </>
   );
 };

@@ -29,11 +29,13 @@
   flex-direction: row;
   padding: 0rem;
   justify-content: space-between;
+  
 }
 .roundsButton {
   display: flex;
   flex-direction: row;
-  align-items: flex-start;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .textLanguage {
@@ -107,7 +109,7 @@
 .trashBtn {
   position: relative;
   justify-content: center;
-  padding-left: 40%;
+  padding-left: 30%;
   gap: 10;
 }
 
@@ -119,4 +121,15 @@
 	position: relative;
 	margin-top: 20rem;
 	margin-bottom: 40%;
+}
+
+.selectAll{
+  margin-bottom: 20px;
+}
+
+.spaceText {
+  position: absolute;
+  width: 68.3%;
+  height: 0.1rem;
+  background: var(--gray300);
 }

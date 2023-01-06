@@ -1,3 +1,4 @@
+import './TableStyles.css'
 import { ChangeEvent, useState, useEffect, useContext } from 'react';
 import { v4 } from 'uuid'
 import { columns } from './utils/Columns'
@@ -13,29 +14,30 @@ import styles from './Table.module.css'
 import useTable from './hooks/useTable';
 import Modal from '../Modal';
 import ModalEditUser from '../Modal/ModalEditUsers';
-import { TableContext } from '../../pages/UsersPage';
 import { getUsersData } from '../../hooks/useUsers';
+import { TableContext } from '../../context/TableContext';
+import { IUser } from '../../interface/FetchAllUserResponse';
+import TableSkeleton from '../../Skeletons/TableSkeleton';
 
-// const Table = ({ data, isLoading }: { data: User[], isLoading?: boolean }) => {
-
-const Table = ({data}: {data: User[]}) => {
-
-    const { isOpenModalEditUser, currentUser, setDeleteUser, setIsOpenModalEditUser } = useContext(TableContext)
-    const {  isLoading, refetch} = getUsersData()
-    const [_isLoading, setIsLoading] = useState<boolean>(isLoading ? isLoading : false)
-    const [rowsPerPage, setRowsPerPage] = useState<number>(5)
-    const [page, setPage] = useState(1)
+const Table = () => {
+    const { state, setDeleteUser, } = useContext(TableContext)
+    const { currentUser, isOpenModalEditUser } = state
+    const [pagination, setPagination] = useState({ page: 1, rowsPerPage: 5 })
     const [checkAll, setCheckAll] = useState(false)
-    //hooks
-    const { slice, range } = useTable(data, page, rowsPerPage)
 
-    useEffect(() => {
-     refetch()
-     console.log(page,rowsPerPage)
-    }, [page, rowsPerPage])
-    
+    //hooks
+    const { data, isLoading, refetch, isFetching } = getUsersData(pagination)
+    const [_isLoading, setIsLoading] = useState<boolean>(isLoading ? isLoading : false)
+    const range = Math.ceil((data?.count ?? pagination.rowsPerPage) / pagination.rowsPerPage)
+    const pages = Array.from({ length: range }, (_, index) => index + 1)
+
     const handleRowperPage = (number: number) => {
-        setRowsPerPage(number)
+        if (number !== pagination.rowsPerPage) return setPagination((prev) => ({ ...prev, page: 1, rowsPerPage: number }))
+        return setPagination((prev) => ({ ...prev, rowsPerPage: number }))
+    }
+    
+    const handlePage = (number: number) => {
+        setPagination((prev) => ({ ...prev, page: number }))
     }
 
     const handleActions = () => {
@@ -43,26 +45,49 @@ const Table = ({data}: {data: User[]}) => {
     }
 
     const handleCheck = (e?: ChangeEvent<HTMLInputElement>, user?: User) => {
-        console.log(e);
+        let parentElement = e?.target?.parentNode?.parentElement
         if (e?.target.checked) {
+            console.log(user?.id);
+
             setDeleteUser(user)
+
+            if (parentElement) {
+                parentElement.classList.add('selected')
+            }
         } else {
             setDeleteUser(undefined)
+            if (parentElement) {
+                parentElement.classList.remove('selected')
+            }
         }
+        console.log(e?.target.parentNode?.parentNode);
     }
 
     const handleCheckHeader = (e?: ChangeEvent<HTMLInputElement>) => {
         setCheckAll(e!.target.checked)
     }
 
+    useEffect(() => {
+        refetch()
+        console.log(data?.users)
+        /* if(data?.users.length == 0) setPage(prev => prev-1) */
+    }, [pagination])
+
+    useEffect(() => {
+        console.log(currentUser)
+    }, [currentUser])
+
+    if(isFetching || isLoading) return <TableSkeleton/>
+
+
     return (
         <>
             <TableComponent style={{ width: '100%' }}>
                 <Thead>
-                    <Tr>
+                    <Tr className={styles.trHead}>
                         {
                             columns.map(column => (
-                                <Th style={{ width: column.width, margin: '0', border: 'none', boxSizing: 'border-box' }} key={v4()}>
+                                <Th style={{ width: column.width }} key={v4()}>
                                     {
                                         column.headerName !== 'check' ? <p className={styles.styleheader}>{column.headerName}</p> : <input className={styles.inputHeader} type='checkbox' checked={checkAll} onChange={handleCheckHeader} />
                                     }
@@ -71,10 +96,12 @@ const Table = ({data}: {data: User[]}) => {
                         }
                     </Tr>
                 </Thead>
+
+
                 <Tbody>
                     {
-                        slice! && slice.map((item) =>
-                            <Tr key={item.id}>
+                        data! && data.list.map((item: User) =>
+                            <Tr key={item.id} className={styles.trBody}>
                                 {
                                     columns.map((row, i) => (
                                         <Td key={v4()} style={{ width: row.width, margin: '0', padding: 0, border: 'none', boxSizing: 'border-box' }}>
@@ -91,10 +118,11 @@ const Table = ({data}: {data: User[]}) => {
             </TableComponent>
 
 
-            {slice && <TFooter range={range} slice={slice} setPage={setPage} page={page} callBack={handleRowperPage} data={data} />}
+            {/* {data && <TFooter range={pages} setRowsPerPage={setRowsPerPage} slice={data.list} setPage={setPage} page={page} callBack={handleRowperPage} totalItems={data?.count ?? rowsPerPage} rowPerPage={rowsPerPage}/>} */}
+            {data && !isFetching && <TFooter range={pages} slice={data.list} setPage={handlePage} page={pagination.page} callBack={handleRowperPage} totalItems={data?.count ?? pagination.rowsPerPage} rowsPerPage={pagination.rowsPerPage} />}
             {
                 currentUser &&
-                <Modal isOpen={isOpenModalEditUser} setIsOpen={setIsOpenModalEditUser}>
+                <Modal isOpen={isOpenModalEditUser}>
                     <ModalEditUser
                         user={currentUser}
                         size='md'

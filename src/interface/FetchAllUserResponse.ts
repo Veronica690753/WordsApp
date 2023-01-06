@@ -19,7 +19,7 @@ export interface IUser {
     lastname?: string,
     middlename?: string,
     name?: string,
-    phone: string,
+    phone?: number,
     second_lastname?: string,    
     timezone?: string
 }

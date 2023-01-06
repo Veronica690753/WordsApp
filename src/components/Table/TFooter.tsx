@@ -4,19 +4,21 @@ import { TableFooterProps } from './interface'
 
 import styles from './Table.module.css'
 
-const TFooter = <T extends object>({ range, setPage, page, slice, callBack, data }: TableFooterProps<T>) => {
+const TFooter = <T extends object>({ range, setPage, page, slice, callBack, totalItems, rowsPerPage, iconRow}:TableFooterProps<T>) => {
 
     useEffect(() => {
-        if (slice.length < 1 && page !== 1) {
-            setPage(page - 1)
-        }
-    }, [slice, page, setPage])
+        console.log({page, rowsPerPage,totalItems, operacion:(rowsPerPage*(page-1)) + slice.length})
+        
+       console.log({page, rowsPerPage, slice: slice.length})
+   }, [rowsPerPage])
 
     return (
         <div className={styles.footerContainer}>
             <div className={styles.selectContainer}>
                 <p className={styles.textRowsPage}>Rows per page</p>
-                <select onChange={(e) => callBack(Number(e.target.value))} className={styles.numFooter}>
+                <select onChange={(e) => callBack(parseInt(e.target.value))} 
+                        className={`${styles.numFooter} ${styles[iconRow]}`} 
+                        value={rowsPerPage} >
                     <option>
                         5
                     </option>
@@ -29,7 +31,8 @@ const TFooter = <T extends object>({ range, setPage, page, slice, callBack, data
                 </select>
             </div>
             <div className={styles.footerShowing}>
-                <p className={styles.textShowing}>{`Showing ${slice.length} of ${data.length} Results`}</p>
+                {/* <p className={styles.textShowing}>{`Showing ${slice.length} of ${totalItems} Results`}</p> */}
+                <p className={styles.textShowing}>{`Showing ${(rowsPerPage*(page-1)) + slice.length} of ${totalItems} Results`}</p>
             </div>
             <div className={styles.stylePagination}>
                 <div onClick={() => setPage(page > 1 ? (page - 1) : page)}>
@@ -48,7 +51,7 @@ const TFooter = <T extends object>({ range, setPage, page, slice, callBack, data
                     ))
                 }
                 <div onClick={() => setPage(page < range.length ? (page + 1) : page)}>
-                    <CaretRight size={16} style={{ color: '#A3A3A3' }} />
+                    <CaretRight size={16} style={{ color: '#A3A3A3', marginLeft: 2 }} />
                 </div>
             </div>
         </div>

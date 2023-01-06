@@ -5,13 +5,20 @@ import TimeZone from "../../Typhography/TimeZone";
 import { ColumnsProps, User } from "../interface/index";
 import styles from '../Table.module.css'
 
+// const mesActual = new Date();
+// const meses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Setiembre", "Octubre", "Noviembre", "Diciembre"];
+// console.log(meses[mesActual.getMonth()]);
+// const event = new Date(params);
 
 export const columns:ColumnsProps[] = [
     {
         field: 'check',
         headerName: 'check',
         width: '5%',
-        renderCell: (params, action) => <CheckBox user={params as User} onChange={(e) => action(e, params as User)} defaultChecked={params.check} />
+        renderCell: (params, action) => 
+        <CheckBox user={params as User} 
+        onChange={(e) => action(e, params as User)} 
+        defaultChecked={params.check} />
     },
     {
         field:'user',
@@ -28,21 +35,21 @@ export const columns:ColumnsProps[] = [
     {
         field:'phone',
         headerName:'Phone',
-        width:'19%',
+        width:'13%',
         renderCell: (params, action)=>
         <p className={styles.styleBody}>{params.phone}</p>
     },
     {
         field:'birthday',
         headerName:'Birthday',
-        width:'13%',
+        width:'10%',
         renderCell: (params, action)=>
-        <p className={styles.styleBody}>{params.birthday}</p>
+        <p className={styles.styleBody}>{params.birthday}</p>        
     },
     {
         field:'language',
         headerName:'Language',
-        width:'14%',
+        width:'10%',
         renderCell: (params, action)=>
         <p className={styles.styleBody}>{params.language}</p>
     },
@@ -63,6 +70,7 @@ export const columns:ColumnsProps[] = [
         width: '3%',
         renderCell: (params, action) => 
         <div className={styles.containerAvatar}>
-            <ModalRoundButton user={params as User} iconName='DotsThree' /></div>
+            <ModalRoundButton user={params as User} 
+            iconName='Pencil'  /></div>
     }
 ]

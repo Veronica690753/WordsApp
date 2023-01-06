@@ -6,6 +6,7 @@ import { QueryClientProvider, QueryClient } from 'react-query'
 import { Styles } from './interface';
 import { useEffect, useState } from 'react';
 import configStyles from './json/configStyles.json'
+import { TableContextProvider } from './context/TableContextProvider';
 
 const domain = import.meta.env.VITE_AUTH0_DOMAIN;
 const clientId = import.meta.env.VITE_AUTH0_CLIENT_ID;
@@ -36,11 +37,13 @@ export const App = () => {
       // TODO: recordar quitar el comentario 
       // audience="https://dev-znfmr804n76vwx88.us.auth0.com/api/v2/"
       >
-        <ContextProvider>
-          <BrowserRouter>
-            <RouterApp />
-          </BrowserRouter>
-        </ContextProvider>
+        <TableContextProvider>
+          <ContextProvider>
+            <BrowserRouter>
+              <RouterApp />
+            </BrowserRouter>
+          </ContextProvider>
+        </TableContextProvider>
       </Auth0Provider>
     </QueryClientProvider>
   )

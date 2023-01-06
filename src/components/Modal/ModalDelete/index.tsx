@@ -1,50 +1,31 @@
-import { ChangeEvent, useContext, useState } from 'react'
+import { ChangeEvent, useContext, useEffect, useState } from 'react'
 import { ModalContext } from '..'
 import { deleteUserData } from '../../../hooks/useUsers'
 import { IUser } from '../../../interface/FetchAllUserResponse'
 import BasicBtn from '../../Button/BassicButton'
+import { User } from '../../Table/interface'
 import styles from './ModalDelete.module.css'
 
 
 interface ModalDeleteProps {
 	title?: string,
-	body?: string
+	body?: string,
+	user: User | undefined
 }
 
+  export const ModalDelete = ({ title, body, user: originalname }: ModalDeleteProps) => {
 
+	const [user, setUser] = useState<User>(originalname ?? {} as User)
+	const { setIsOpenModal } = useContext(ModalContext)
 
-export const ModalDelete = ({ title, body}: ModalDeleteProps) => {
+	const { mutate } = deleteUserData()
 
-	const initialValue = {
-		birthday: '',
-		auth0_id: '',
-		email: '',
-		id: '',
-		language: '',
-		lastname: '',
-		middlename: '',
-		name: '',
-		phone: '',
-		second_lastname: '',
-		timezone: '',
-		image: '',
-		is_admin: false
-	  }
-	
-		const [user, setUser] = useState<IUser>(initialValue)
-		const { setIsOpenModal } = useContext(ModalContext)
-	
-		const { mutate } = deleteUserData()
-		function handleChange(e: ChangeEvent<HTMLInputElement>) {
-			setUser(
-				{ ...user, [e.target.id]: e.target.value }
-			)
-		}
-		function handleSubmit() {
-			mutate(user)
-			setUser(initialValue)
-			setIsOpenModal(false)
-		}
+	function handleSubmit() {
+		mutate(originalname ?? {} as IUser)
+		console.log(originalname);
+		setIsOpenModal(false)
+		
+	}
 
 	return (
 		<div className={styles.content}>
@@ -56,8 +37,8 @@ export const ModalDelete = ({ title, body}: ModalDeleteProps) => {
 			<div className={styles.linea} />
 			<div className={styles.border2}>
 
-				<BasicBtn
-				onClick={() => setIsOpenModal(false)}
+			<BasicBtn
+					onClick={() => setIsOpenModal(false)}
 					size='sm'
 					text='Cancel'
 					fontWeight={700}
@@ -68,11 +49,11 @@ export const ModalDelete = ({ title, body}: ModalDeleteProps) => {
 				<BasicBtn
 					size='sm'
 					text='Delete'
+					onClick={handleSubmit}
 					fontWeight={700}
 					backgroundColor='var(--red400)'
 					borderColor='var(--red400)'
 					colorText='var(--white)'
-					onClick={handleSubmit}
 				/>
 
 

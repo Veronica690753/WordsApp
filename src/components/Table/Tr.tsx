@@ -1,7 +1,7 @@
 import React, { ReactElement } from 'react'
 import styles from './Table.module.css'
-export const Tr = ({children}:{children:ReactElement|ReactElement[]}) => {
+export const Tr = ({children, className}:{children:ReactElement|ReactElement[], className: string}) => {
     return (
-        <tr className={styles.contentTr}>{children}</tr>
+        <tr className={className}>{children}</tr>
     )
 }
