@@ -4,7 +4,6 @@ export type Params = {
     [key: string]: any
 }
 
-
 export interface ColumnsProps {
     field: string,
     headerName: string,
@@ -24,7 +23,7 @@ export interface User{
     lastname?: string,
     middlename?: string,
     name?: string,
-    phone?: 0,
+    phone?: string,
     second_lastname?: string,    
     timezone?: string
 }
@@ -45,8 +44,6 @@ export interface TableFooterProps <Data> {
 export interface UserTable {
     data: User;
 }
-
-
 
 export interface Image {
     file_name:  string;

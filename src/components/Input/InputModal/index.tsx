@@ -8,7 +8,7 @@ export const InputModal = ({ hasError, errorMsg, onBlur, textId, textTitle, size
 	const [focus, setFocus] = useState(false)
 		
 	return (
-		<div>
+		<div className={styles.containerInput}>
 			<label id={textId} className={`${styles.textTitle}`} style={{ color: hasError ? 'red' : 'var(--neutral800)' }} >{textTitle}</label>
 			<label id={textId} className={`${styles.textSubTitle} ${hasError ? 'red' : styles.textSubTitle}`}>{subText}</label>
 

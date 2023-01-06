@@ -20,14 +20,14 @@ export const CheckBox = ({ defaultChecked, onChange, user }: CheckBoxProps) => {
 
 	useEffect(() => {
 		if (deleteUser?.id === user?.id) {
-			console.log(deleteUser?.id)
+			// console.log(deleteUser?.id)
 			setIsCheked(true)
 			
 		} else {
 			setIsCheked(false)
 		}
 
-		console.log(setIsCheked);
+		// console.log(setIsCheked);
 
 	}, [deleteUser])
 

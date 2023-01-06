@@ -85,7 +85,6 @@ export const UsersPage = () => {
             <div className={styles.roundsButton}>
               {
                 deleteUser?.id && <BtnDeleteUser iconName="Trash" onClick={() => setOpenModalDeleteUser(true)} />
-
               }
               {
                 show

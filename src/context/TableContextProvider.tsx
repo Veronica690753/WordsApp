@@ -9,12 +9,14 @@ interface TableProps {
 
 export interface TableContextState {
     isOpenModalEditUser: boolean,
+    isOpenModalNewCategory?: boolean,
     deleteUser?: User,
     currentUser?: User
 }
 
 const INITIAL_STATE: TableContextState = {
     isOpenModalEditUser: false,
+    isOpenModalNewCategory: false,
     deleteUser: undefined,
     currentUser: undefined
 }
@@ -32,11 +34,20 @@ export const TableContextProvider = ({ children }: TableProps) => {
         })
     }
 
-    const setIsOpenModalEditUser = (isOpenModalEditUser: boolean) => {
+    const setIsOpenModalEditUser = (isOpenModalEditUser: boolean ) => {
         dispatch({
             type: 'setIsOpenModalEditUser',
             payload: {
                 isOpenModalEditUser
+            }
+        })
+    }
+
+    const setIsOpenModalNewCategory  = (isOpenModalNewCategory: boolean| any) => {
+        dispatch({
+            type: 'setIsOpenModalNewCategory',
+            payload: {
+                isOpenModalNewCategory
             }
         })
     }
@@ -51,7 +62,7 @@ export const TableContextProvider = ({ children }: TableProps) => {
     }
 
     return (
-        <TableContext.Provider value={{ state, setCurrentUser, setDeleteUser, setIsOpenModalEditUser }}>
+        <TableContext.Provider value={{ state, setCurrentUser, setDeleteUser, setIsOpenModalEditUser, setIsOpenModalNewCategory }}>
             {children}
         </TableContext.Provider>
     )

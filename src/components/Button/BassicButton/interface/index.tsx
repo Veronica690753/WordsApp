@@ -8,4 +8,5 @@ export interface BasicButtonProps{
     colorText?:string,
     text?:string,
     onClick?:MouseEventHandler<HTMLButtonElement>,
+    type?: 'submit' | 'reset'
 }

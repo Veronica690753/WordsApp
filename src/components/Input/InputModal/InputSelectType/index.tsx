@@ -21,7 +21,7 @@ export interface TimezoneProps{
 export const InputSelectTime = ({ textTitle, size, defaultValue, onChange, name, value, placeholder, onBlur, hasError, errorMsg }: InputsSelectTimeProps) => {
 	const [focus, setFocus] = useState()
 	return (
-		<div>
+		<div className={styles.containerInput}>
 			<label htmlFor="timezone" className={`${styles.textTitle}`} 
 			style={{ color: hasError ? 'red' : 'var(--neutral800)' }}>
 				{textTitle}</label>

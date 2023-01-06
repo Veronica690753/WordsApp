@@ -1,8 +1,11 @@
-import { ReactElement, useEffect, useState } from "react";
+import { ReactElement, useContext, useState } from "react";
+import { TableContext } from "../../../context/TableContext";
 import BasicBtn from "../../Button/BassicButton";
 import ToggleButtonGlossary from "../../Button/ToggleButtonGlossary/ToggleButtonGlossary";
 import { InputCategories } from "../../Input/InputCategories/InputCategories";
 import { InputSearch } from "../../Input/InputSearch";
+import Modal from "../../Modal";
+import ModalNewCategory from "../../Modal/ModalNewCategory/ModalNewCategory";
 import styles from "./BannerGlossary.module.css";
 
 interface BannerGlossaryProps {
@@ -12,7 +15,8 @@ interface BannerGlossaryProps {
 
 const BannerGlossary = ({  }: BannerGlossaryProps) => {
     const [show, setShow] = useState<boolean>(true);
-    
+    const {setIsOpenModalNewCategory, state } = useContext(TableContext)
+    const {isOpenModalNewCategory} = state
     return (
         <>
             <div className={styles.containerHeader}>
@@ -25,6 +29,7 @@ const BannerGlossary = ({  }: BannerGlossaryProps) => {
                         backgroundColor="var(--celeste600)"
                         colorText="var(--white)"
                         text="New Category"
+                        onClick={() => setIsOpenModalNewCategory(true)}
                     />
                 </div>
                 <div className={styles.space}></div>
@@ -84,6 +89,12 @@ const BannerGlossary = ({  }: BannerGlossaryProps) => {
                 }
 
             </div>
+            <Modal
+        callback={(Open) => setIsOpenModalNewCategory(Open)}
+        isOpen={isOpenModalNewCategory}
+      >
+        <ModalNewCategory/>
+      </Modal>
 
         </>
     )

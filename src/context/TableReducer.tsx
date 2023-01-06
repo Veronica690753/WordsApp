@@ -5,6 +5,7 @@ export type Action =
     |   {type:'setCurrentUser', payload:{currentUser:User}}
     |   {type:'setIsOpenModalEditUser', payload:{isOpenModalEditUser:boolean}}
     |   {type:'setDeleteUser', payload:{deleteUser:User | undefined}}
+    |   {type:'setIsOpenModalNewCategory',payload:{isOpenModalNewCategory:boolean | undefined}}
 
 export const TableReducer = (state:TableContextState, action:Action):TableContextState=>{
     switch (action.type) {
@@ -17,6 +18,11 @@ export const TableReducer = (state:TableContextState, action:Action):TableContex
             return{
                 ...state,
                 isOpenModalEditUser:action.payload.isOpenModalEditUser
+            };
+        case 'setIsOpenModalNewCategory':
+            return{
+                ...state,
+                isOpenModalNewCategory:action.payload.isOpenModalNewCategory
             };
         case 'setDeleteUser':
             return{

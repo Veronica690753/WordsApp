@@ -4,14 +4,14 @@ import styles from './MessageNewUser.module.css'
 
 interface Props {
     onClick?: MouseEventHandler<HTMLButtonElement>,
-    message: string
+    message?: string
 }
 
 
 export const MessageNewUser = ({ onClick, message }: Props) => {
 
     return (
-        <div style={{position: 'fixed', left: '1.6rem', bottom: '1.6rem'}}>
+        <div style={{position: 'fixed', left: '3.6rem', bottom: '1.8rem'}}>
             <div className={styles.containerMessage} >
                 <div className={styles.containerTxt}>
                     <ThumbsUp size={24} style={{ color: 'white' }} />

@@ -7,9 +7,9 @@ import styles from './Table.module.css'
 const TFooter = <T extends object>({ range, setPage, page, slice, callBack, totalItems, rowsPerPage, iconRow}:TableFooterProps<T>) => {
 
     useEffect(() => {
-        console.log({page, rowsPerPage,totalItems, operacion:(rowsPerPage*(page-1)) + slice.length})
+        // console.log({page, rowsPerPage,totalItems, operacion:(rowsPerPage*(page-1)) + slice.length})
         
-       console.log({page, rowsPerPage, slice: slice.length})
+    //    console.log({page, rowsPerPage, slice: slice.length})
    }, [rowsPerPage])
 
     return (

@@ -18,9 +18,10 @@ export interface InputsSelectIdiomProps {
 export const InputSelectIdiom = ({ textTitle, size, defaultValue, onChange,
 	name, value, placeholder, onBlur, hasError, errorMsg }: InputsSelectIdiomProps) => {
 	return (
-		<div>
+		<div className={styles.containerInput}>
 			<label htmlFor="idiom"
-				className={`${styles.textTitle}`}>{textTitle}</label>
+				className={`${styles.textTitle}`} style={{ color: hasError ? 'red' : 'var(--neutral800)' }}>
+					{textTitle}</label>
 			<select
 				className={`
 				${styles[size]} 

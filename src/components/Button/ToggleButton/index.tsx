@@ -1,14 +1,15 @@
-import { MouseEventHandler, ReactElement, useEffect, useRef, useState } from "react";
+import { FocusEventHandler, MouseEventHandler, ReactElement, useEffect, useRef, useState } from "react";
 import Body2 from "../../Typhography/Body2";
 import styles from './ToggleButton.module.css'
 
 interface ToggleButtonProps {
   onClick?: MouseEventHandler<HTMLDivElement>
   values: string[]
-  onChange?: (selected:{isActive:boolean, value:String})=>void 
+  onChange?: (selected:{isActive:boolean, value:String})=>void,
+  onBlur?: FocusEventHandler<HTMLDivElement> | undefined
 }
 
-export const ToggleButton = ({values, onChange }: ToggleButtonProps) => {
+export const ToggleButton = ({values, onChange}: ToggleButtonProps) => {
 
   const [isActive, setIsActive] = useState<boolean>(true)
 

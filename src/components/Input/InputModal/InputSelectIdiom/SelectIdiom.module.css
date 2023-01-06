@@ -108,3 +108,6 @@
 .emailError {
 	outline: 0.2rem solid var(--red500);
 }
+.containerInput{
+	position: relative;
+  }
