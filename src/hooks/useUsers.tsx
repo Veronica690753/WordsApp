@@ -1,13 +1,15 @@
 import { useMutation, useQuery, useQueryClient } from 'react-query';
-import { createUsers, deleteUsers, getUsers, getUsersCards, searchUsers, updateUsers } from '../api/MicroServiceOne';
+import { createUsers, deleteUsers, getUsers, getUsersCards, searchUsers, updateImg, updateUsers } from '../api/MicroServiceOne';
 
-export function getUsersDataCards (){
-    return useQuery('users',getUsersCards,{
-    })
+export function getUsersDataCards() {
+	return useQuery('users', getUsersCards, {
+	})
 }
 
-export function getUsersData({page, rowsPerPage}: any) {
-	return useQuery('users', ()=> getUsers({page, rowsPerPage}), {
+export function getUsersData({ page, rowsPerPage, name }: any) {
+	const callback = Boolean(name) ? searchUsers({name}) : getUsers({ page, rowsPerPage })
+	return useQuery('users', () => (callback), {
+		cacheTime: 0, staleTime: 0
 	})
 }
 
@@ -44,8 +46,16 @@ export function deleteUserData() {
 	})
 }
 
-// export function searchUserData() {
-// 	// return useQuery('users', searchUsers,{
-
-// 	})
-// }
+export function updateImgData() {
+	const queryClient = useQueryClient()
+	return useMutation(updateImg, {
+		onSuccess: async () => {
+			await queryClient.invalidateQueries({
+				queryKey: ['users']
+			})
+			// await queryClient.invalidateQueries({
+			// 	queryKey: ['usersCards']
+			// })
+		},
+	})
+}

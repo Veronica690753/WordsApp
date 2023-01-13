@@ -8,6 +8,7 @@ import { UsersPage } from '../pages/UsersPage';
 import { WordsPage } from '../pages/WordsPage';
 import configStyles from '../json/configStyles.json'
 import globalStyles from '../App.module.css'
+import { TableContextProvider } from '../context/TableContextProvider';
 
 
 export const RouterApp = () => {
@@ -29,6 +30,7 @@ export const RouterApp = () => {
 		<>
 		<div style={styleConfig} className={globalStyles.appContainer}>
 		<NavBar />
+		<TableContextProvider>
 		<Routes>
 			<Route path='/' element={<HomePage />} />
 			<Route path='/users' element={<UsersPage />} />
@@ -40,6 +42,7 @@ export const RouterApp = () => {
 
 			<Route path='*' element={ <Navigate replace to='/' />}/>
 		</Routes>
+		</TableContextProvider>
 		</div>
 		</>
 	)

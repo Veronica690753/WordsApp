@@ -16,7 +16,7 @@ const ModalNewCategory = () => {
   return (
     <div >
       <div
-        className={`${styles.modalContainer}`}
+        className={`${styles.modalContainer}`}  
       >
         <div className={styles.containerCard}>
         <div className={styles.headerTitle}>

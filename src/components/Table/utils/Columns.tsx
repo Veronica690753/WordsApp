@@ -27,9 +27,11 @@ export const columns:ColumnsProps[] = [
         renderCell: (params, action)=>
         <div className={styles.containerAvatar}>
             <AvatarUsers size='md' text={params.name}
-                backgroundColor='var(--teal500)'
-                createBy={`${params.name} ${params.lastname}`}
-                emailUser={params.email} />
+                    backgroundColor='var(--teal500)'
+                    createBy={`${params.name} ${params.lastname}`}
+                    emailUser={params.email}
+                    imageSrc={params.image && `http://localhost:4000/api/users/image/${params.image.file_name}`}
+                />
         </div>
     },
     {

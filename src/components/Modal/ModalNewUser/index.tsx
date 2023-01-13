@@ -15,10 +15,13 @@ import { CreateMessage } from "../../Messages/MessageNewUser";
 import { Formik, isInteger, useFormik } from "formik";
 import { date, number, object, string } from "yup";
 import { MessageNewUser } from "../../Messages/MessageNewUser/MessageNewUser";
+import ModalEditUser from './../ModalEditUsers/index';
+import { useMutation } from 'react-query';
+import { createUsers } from "../../../api/MicroServiceOne";
 
 const ModalNewUser = ({ size, textHeader, onSuccess }: ModalNewProps) => {
 
-  const initialValues = {
+  const initialValue = {
     auth0_id: '',
     birthday: '',
     email: '',
@@ -34,9 +37,10 @@ const ModalNewUser = ({ size, textHeader, onSuccess }: ModalNewProps) => {
     timezone: ''
   }
 
-  const [user, setUser] = useState<IUser>(initialValues)
+  const [user, setUser] = useState<IUser>(initialValue)
   const { setIsOpenModal } = useContext(ModalContext)
-  const { mutate } = createUserData()
+  // const { mutate, isSuccess } = createUserData()
+  const [isMultiple, setisMultiple] = useState(false)
 
   const validationSchema = object({
     birthday: date().default(new Date('2004-12-31')).max('2004-12-31', 'La fecha no puede ser mayor a 2004').required('El año de nacimiento es obligatorio'),
@@ -48,11 +52,6 @@ const ModalNewUser = ({ size, textHeader, onSuccess }: ModalNewProps) => {
     timezone: string().required('Debes seleccionar una zona horaria'),
   })
 
-  // const formik = useFormik<IUser>({
-
-  // }
-  // )
-
   function handleTypeUserChange({ isActive }: { isActive: boolean }) {
     console.log('handleType', isActive);
     setUser({ ...user, is_admin: isActive })
@@ -60,13 +59,15 @@ const ModalNewUser = ({ size, textHeader, onSuccess }: ModalNewProps) => {
 
   return (
     <Formik
-      initialValues={initialValues}
+      initialValues={initialValue}
       validationSchema={validationSchema}
-      onSubmit={(useFormik, { resetForm }) => {
-        resetForm()
-        mutate({ ...useFormik, is_admin: user.is_admin })
-        setUser(initialValues)
-        setIsOpenModal(false)
+      onSubmit={(e, { resetForm }) => {
+        // resetForm()
+        createUsers({ ...e, is_admin: user.is_admin }).then(()=> {
+          resetForm()
+          !isMultiple && setIsOpenModal(false)
+        })
+        setUser(initialValue)
         onSuccess && onSuccess(true, `Great! You've created new user`)
       }}
     >
@@ -90,7 +91,7 @@ const ModalNewUser = ({ size, textHeader, onSuccess }: ModalNewProps) => {
               <div className={styles.textTypeUser}>
                 What type of user do you want to create?
               </div>
-                <ToggleButton values={['Admin', 'Editor']} onChange={handleTypeUserChange} />
+              <ToggleButton values={['Admin', 'Editor']} onChange={handleTypeUserChange} />
             </div>
 
             <div className={styles.containerPersonalInformation}>
@@ -101,7 +102,9 @@ const ModalNewUser = ({ size, textHeader, onSuccess }: ModalNewProps) => {
               <div className={styles.containerChangePicture}>
                 <Avatar
                   size="xl"
-                  imageSrc="https://xavierferras.com/wp-content/uploads/2019/02/266-Persona.jpg"
+                  text={values.name}
+                  // imageSrc="https://xavierferras.com/wp-content/uploads/2019/02/266-Persona.jpg"
+                  // imageSrc={getImage()}
                 />
                 <div className={styles.containerChangePictureBtn}>
                   <BasicBtn
@@ -208,13 +211,14 @@ const ModalNewUser = ({ size, textHeader, onSuccess }: ModalNewProps) => {
                 errorMsg={errors.language}
               />
             </div>
-            
+
             <div className={styles.separationFooter}></div>
 
             <div className={styles.containerFooter}>
-              <div className={styles.inputContainer}>
-                <input type="checkbox" className={styles.input} />
-                <p className={styles.textInput}>Create another User</p>
+              <div className={styles.inputContainer} >
+                <input type="checkbox" className={styles.input} 
+                onChange={(e)=>setisMultiple(e.target.checked) } checked={isMultiple} />
+                <p className={styles.textInput} >Create another User</p>               
               </div>
               <div className={styles.buttonFooter}>
                 <BasicBtn

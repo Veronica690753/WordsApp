@@ -10,6 +10,7 @@
   top: 1.6rem;
   background: #f3f4f6;
   border-radius: 4rem;
+  
 }
 
 .textLanguage {
@@ -18,10 +19,16 @@
   font-style: normal;
   font-weight: 700;
   font-size: 1.4rem;
+  color: var(--gray600);
   line-height: 2rem;
   border: 0 #f3f4f6;
   background: #f3f4f6;
   outline: none;
+  appearance: none;
+	background-image: url('https://res.cloudinary.com/dtwp0t9tn/image/upload/v1673549873/Vector_2_ffqjzx.svg');
+	background-position: left 5.4rem top 0.8rem;
+	background-repeat: no-repeat;
+  width: 20rem;
 }
 
 .iconStyles {

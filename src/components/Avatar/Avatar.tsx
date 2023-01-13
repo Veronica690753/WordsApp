@@ -5,20 +5,21 @@ import styles from './Avatar.module.css'
 import { AvatarProps } from './interface'
 
 
-const Avatar = ({size, imageSrc, isLoading, backgroundColor, createBy, text, numberOfCharacters,onClick,textName}:AvatarProps) => {
+const Avatar = ({size, imageSrc, isLoading, backgroundColor, createBy, text, numberOfCharacters,onClick,textName, value, name}:AvatarProps) => {
     
     return (
-        
         <div className={styles.containerText}>
         <div 
             className={`${styles[size]} ${styles.container}`}
-            style={{backgroundColor:imageSrc?'transparent':backgroundColor}}
+            style={{backgroundColor: imageSrc ? 'transparent' : backgroundColor}}
             onClick={onClick}
         >
             {imageSrc&&
-                !isLoading?
-                <img src={imageSrc} alt='avatar'/>:
-                isLoading?<CircleSkeleton/>:
+                !isLoading ?
+                <img src={imageSrc} alt='avatar' id='avatar'/>
+                :
+                isLoading ? <CircleSkeleton/>
+                :
                 <p>{text?.slice(0,numberOfCharacters?numberOfCharacters:2).toUpperCase()}</p>
             }
         </div>

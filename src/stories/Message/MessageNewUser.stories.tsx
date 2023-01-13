@@ -3,7 +3,7 @@ import { MouseEvent} from 'react'
 import { MessageNewUser } from '../../components/Messages/MessageNewUser/MessageNewUser'
 
 export default {
-    title:'MessageNewUser',
+    title:'Message',
     component: MessageNewUser
 } as ComponentMeta<typeof MessageNewUser>
 
@@ -20,6 +20,6 @@ const Template:ComponentStory<typeof MessageNewUser> = (args) => {
 
 export const MessageNewUserComponent = Template.bind({})
 MessageNewUserComponent.args={
-    onClick:handleClick
-    
+    onClick:handleClick,
+    message: `Great! You've created new user  `  
 }

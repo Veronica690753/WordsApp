@@ -29,14 +29,18 @@ export const UsersPage = () => {
   const [OpenModalDeleteUser, setOpenModalDeleteUser] = useState(false)
   const [show, setShow] = useState(true);
   const [checkAll, setcheckAll] = useState(false)
-  const { isAuthenticated } = useAuth0();
   const { data, isLoading } = getUsersDataCards();
-  const [successModal, setsuccessModal] = useState<{success: boolean, message: string}>()
+  const [successModal, setsuccessModal] = useState<{ success: boolean, message?: string }>()
+  const [search, setSearch] = useState('')
 
-  const handleSuccessModal = (success: boolean, message: string)=> {
-    setsuccessModal({success, message})
+  const handleSuccessModal = (success: boolean, message: string) => {
+    setsuccessModal({ success, message })
   }
-  
+
+  const handleSearch = (element: any) => {
+    setSearch(element.target.value);
+  }
+
   useEffect(() => {
     !isOpenModalNewUser
       ?
@@ -48,14 +52,22 @@ export const UsersPage = () => {
   useEffect(() => {
   }, [show]);
 
+  useEffect(() => {
+    if(successModal?.success){
+      setTimeout(()=>{
+        setsuccessModal({success: false, message: ''})
+      }, 6000)
+    }
+  }, [successModal])
+  
+
   if (!isReady) {
     return <></>;
   }
-  
+
   return (
     <>
       <div className={styles.floatingBtn}>
-
       </div>
       <div style={{ backgroundColor: "#F8FAFC" }}>
         <div className={styles.containerUser}>
@@ -74,18 +86,28 @@ export const UsersPage = () => {
             <div className={styles.spaceText}></div>
           </div>
           <div className={styles.containerSearch}>
-            <InputSearch
+          <InputSearch
               size="md"
               background="var(--slate100)"
               type="text"
               text="Search Users by name or keyword..."
               icon="MagnifyingGlass"
-              onChange={() => { }}
+              onChange={handleSearch}
+              value={search}
             />
             <div className={styles.roundsButton}>
-              {
-                deleteUser?.id && <BtnDeleteUser iconName="Trash" onClick={() => setOpenModalDeleteUser(true)} />
+                {
+                deleteUser?.id && 
+                <BtnDeleteUser 
+                iconName="Trash" 
+                onClick={() => setOpenModalDeleteUser(true)} 
+                weight="regular"
+                height={2}
+                width={2}
+                padding={1} 
+                />
               }
+              
               {
                 show
                   ?
@@ -122,7 +144,7 @@ export const UsersPage = () => {
 
           {show ? (
             <div className={styles.containerTable}>
-              <Table />
+              <Table search={search} />
             </div>
           ) : (
             <div className={styles.containerCard}>
@@ -151,11 +173,12 @@ export const UsersPage = () => {
       </Modal>
       {
         successModal?.success &&
-        <MessageNewUser 
+        <div className={styles.containerMessageInsert}>
+        <MessageNewUser
         message={successModal.message}
-        onClick={()=>{setsuccessModal({success: false, message:''})}}/> //resetear el estado
+        onClick={() => { setsuccessModal({ success: false, message: '' }) }} /> {/* //resetear el estado */}
+        </div>
       }
-
 
       <Modal callback={(Open) => setOpenModalDeleteUser(Open)} isOpen={OpenModalDeleteUser}>
         <div className={styles.deleteModal}>

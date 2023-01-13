@@ -1,21 +1,18 @@
-import {ComponentMeta, ComponentStory} from '@storybook/react'
-import { MouseEvent} from 'react'
-import ButtonLanguage from '../../components/Button/LanguageButton/';
+import { ComponentMeta, ComponentStory } from '@storybook/react'
+import LanguageButton from '../../components/Button/LanguageButton';
+import { EN } from '../../components/Iconography/Flags';
 
 export default {
-    title:'Button',
-    component: ButtonLanguage
-} as ComponentMeta<typeof ButtonLanguage>
+    title: 'Button',
+    component: LanguageButton
+} as ComponentMeta<typeof LanguageButton>
 
-const handleClick = (e: MouseEvent<HTMLButtonElement>)=>{
-    console.log(e);
+const Template: ComponentStory<typeof LanguageButton> = (args) => {
+
+    return <LanguageButton {...args} />
 }
 
-const Template:ComponentStory<typeof ButtonLanguage> = (args) => {
-    return<ButtonLanguage {...args}/>
-}
-
-export const ButtonLanguageComponent = Template.bind({})
-ButtonLanguageComponent.args={
-    flag:'MX'
+export const LanguageButtonComponent = Template.bind({})
+LanguageButtonComponent.args = {
+    flag: <EN />,
 }

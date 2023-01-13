@@ -34,16 +34,12 @@ export const App = () => {
         domain={domain}
         redirectUri={window.location.origin}
         useRefreshTokens={true}
-      // TODO: recordar quitar el comentario 
-      // audience="https://dev-znfmr804n76vwx88.us.auth0.com/api/v2/"
       >
-        <TableContextProvider>
           <ContextProvider>
             <BrowserRouter>
               <RouterApp />
             </BrowserRouter>
           </ContextProvider>
-        </TableContextProvider>
       </Auth0Provider>
     </QueryClientProvider>
   )

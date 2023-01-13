@@ -3,7 +3,7 @@ import styles from './InputModal.module.css'
 import { useState } from 'react';
 
 export const InputModal = ({ hasError, errorMsg, onBlur, textId, textTitle, size, type, 
-	placeholder, onChange, required, name, value, defaultValue, disabled, iconCalendar, subText, inputNumber }: InputsModalsProps) => {
+	placeholder, onChange, required, name, value, defaultValue, disabled, iconCalendar, subText }: InputsModalsProps) => {
 
 	const [focus, setFocus] = useState(false)
 		

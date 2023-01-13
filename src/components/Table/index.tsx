@@ -19,14 +19,19 @@ import { TableContext } from '../../context/TableContext';
 import { IUser } from '../../interface/FetchAllUserResponse';
 import TableSkeleton from '../../Skeletons/TableSkeleton';
 
-const Table = () => {
+interface TableProps {
+    search: string
+}
+
+const Table = ({search}: TableProps) => {
     const { state, setDeleteUser, } = useContext(TableContext)
     const { currentUser, isOpenModalEditUser } = state
+    const [_search, setSearch] = useState<string>("")
     const [pagination, setPagination] = useState({ page: 1, rowsPerPage: 5 })
     const [checkAll, setCheckAll] = useState(false)
 
     //hooks
-    const { data, isLoading, refetch, isFetching } = getUsersData(pagination)
+    const { data, isLoading, refetch, isFetching } = getUsersData({...pagination, name: _search})
     const [_isLoading, setIsLoading] = useState<boolean>(isLoading ? isLoading : false)
     const range = Math.ceil((data?.count ?? pagination.rowsPerPage) / pagination.rowsPerPage)
     const pages = Array.from({ length: range }, (_, index) => index + 1)
@@ -41,7 +46,7 @@ const Table = () => {
     }
 
     const handleActions = () => {
-        console.log('actions');
+        // console.log('actions');
     }
 
     const handleCheck = (e?: ChangeEvent<HTMLInputElement>, user?: User) => {
@@ -68,10 +73,14 @@ const Table = () => {
     }
 
     useEffect(() => {
+        setSearch(search)
+    }, [search])
+
+    useEffect(() => {
         refetch()
         console.log(data?.users)
         /* if(data?.users.length == 0) setPage(prev => prev-1) */
-    }, [pagination])
+    }, [_search, pagination])
 
     useEffect(() => {
         console.log(currentUser)
@@ -89,7 +98,8 @@ const Table = () => {
                             columns.map(column => (
                                 <Th style={{ width: column.width }} key={v4()}>
                                     {
-                                        column.headerName !== 'check' ? <p className={styles.styleheader}>{column.headerName}</p> : <input className={styles.inputHeader} type='checkbox' checked={checkAll} onChange={handleCheckHeader} />
+                                        column.headerName !== 'check' ? <p className={styles.styleheader}>{column.headerName}</p> : 
+                                        <input className={styles.inputHeader} type='checkbox' checked={checkAll} onChange={handleCheckHeader} />
                                     }
                                 </Th>
                             ))

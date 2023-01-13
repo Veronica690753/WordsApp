@@ -1,4 +1,12 @@
-.containerMessage{
+.containerMain {
+    position: fixed;
+    left: 3.6rem;
+    bottom: 1.8rem;
+    z-index: 100;   
+}
+
+
+.containerMessage {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -12,7 +20,7 @@
     border-radius: 4px;
 }
 
-.containerTxt{
+.containerTxt {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -22,38 +30,40 @@
     width: 25.6rem;
     height: 2.4rem;
 }
-.styleFont{
-    
-font-family: var(--fontA);
-font-style: normal;
-font-weight: 500;
-font-size: 1.4rem;
-line-height: 1.9rem;
-/* identical to box height */
+
+.styleFont {
+
+    font-family: var(--fontA);
+    font-style: normal;
+    font-weight: 500;
+    font-size: 1.4rem;
+    line-height: 1.9rem;
+    /* identical to box height */
 
 
-/* Neutral/200 */
+    /* Neutral/200 */
 
-color: var(--neutral200);
+    color: var(--neutral200);
 }
-.buttonOK{
+
+.buttonOK {
     display: flex;
-flex-direction: row;
-align-items: flex-start;
-padding: 0.6rem 0.8rem;
-width: 3.6rem;
-height: 3.6rem;
-border-radius: 0.8rem;
-cursor: pointer;
+    flex-direction: row;
+    align-items: flex-start;
+    padding: 0.6rem 0.8rem;
+    width: 3.6rem;
+    height: 3.6rem;
+    border-radius: 0.8rem;
+    cursor: pointer;
 }
 
-.OK{
-    
-font-family: var(--fontA);
-font-style: normal;
-font-weight: 500;
-font-size: 1.4rem;
-line-height: 2.4rem;
-color: var(--orange600);
+.OK {
+
+    font-family: var(--fontA);
+    font-style: normal;
+    font-weight: 500;
+    font-size: 1.4rem;
+    line-height: 2.4rem;
+    color: var(--orange600);
 
 }

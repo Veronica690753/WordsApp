@@ -11,7 +11,7 @@ interface Props {
 export const MessageNewUser = ({ onClick, message }: Props) => {
 
     return (
-        <div style={{position: 'fixed', left: '3.6rem', bottom: '1.8rem'}}>
+        <div className={styles.containerMain}>
             <div className={styles.containerMessage} >
                 <div className={styles.containerTxt}>
                     <ThumbsUp size={24} style={{ color: 'white' }} />

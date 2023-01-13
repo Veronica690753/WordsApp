@@ -133,3 +133,7 @@
   height: 0.1rem;
   background: var(--gray300);
 }
+
+.containerMessageInsert{
+  z-index: 130;
+}

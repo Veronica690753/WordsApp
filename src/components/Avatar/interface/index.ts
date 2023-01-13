@@ -9,5 +9,7 @@ export interface AvatarProps{
     createBy?:string,
     textName?:string,
     onClick?:MouseEventHandler<HTMLDivElement>,
-    numberOfCharacters?:1|2
+    numberOfCharacters?:1|2,
+    value?: string,
+    name?: string,
 }

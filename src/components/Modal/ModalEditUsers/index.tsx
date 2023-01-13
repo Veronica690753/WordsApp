@@ -7,10 +7,11 @@ import { ModalContext } from '../index';
 import { EditProps, ModalEditProps } from "./interface";
 import InputModal from "../../Input/InputModal";
 import ToggleButton from "../../Button/ToggleButton";
-import { updateUserData } from "../../../hooks/useUsers";
+import { updateImgData, updateUserData } from "../../../hooks/useUsers";
 import { InputSelectTime } from "../../Input/InputModal/InputSelectType";
 import { InputSelectIdiom } from "../../Input/InputModal/InputSelectIdiom";
 import { TableContext } from "../../../context/TableContext";
+import { InputFile } from "../../Input/InputFile/InputFile";
 
 const initialValue = {
   birthday: '',
@@ -30,6 +31,9 @@ const initialValue = {
 
 const ModalEditUser = ({ size, textHeader, user: originalUser }: ModalEditProps) => {
   const [ userData, setUser ] = useState<EditProps>({ user: originalUser ?? initialValue})
+  const [img, setImg] = useState<File>()
+  const [imageUrl, setImageUrl] = useState<any>()
+  const { mutate: ImgMutate } = updateImgData()
   const { setIsOpenModalEditUser, state } = useContext(TableContext)
   const { mutate } = updateUserData()
   //  console.log(originalUser);
@@ -38,6 +42,26 @@ const ModalEditUser = ({ size, textHeader, user: originalUser }: ModalEditProps)
     setUser(
       { user: { ...userData.user, [e.target.name]: e.target.value } }
     )
+  }
+
+  function handleImage(e: ChangeEvent<HTMLInputElement>) {
+    if (e.target.files) {
+
+      setImg(e.target.files[0])
+      const fr = new FileReader()
+      fr.onload = () => {
+        setImageUrl(fr.result)
+      }
+      fr.readAsDataURL(e.target.files[0])
+      const data = new FormData()
+      data.append('image', e.target.files[0])
+      ImgMutate({ id: userData.user.id, data })
+    }
+  }
+  
+  function getImage() {
+    if (imageUrl) return imageUrl
+    if (userData.user.image) return `http://localhost:4000/api/users/image/${userData.user.image.file_name}`
   }
 
   useEffect(() => setUser({user: originalUser ?? initialValue})
@@ -84,19 +108,13 @@ const ModalEditUser = ({ size, textHeader, user: originalUser }: ModalEditProps)
         </div>
         <p className={styles.profilePicture}>Profile Picture</p>
         <div className={styles.containerChangePicture}>
-          <Avatar
+        <Avatar
             size="xl"
-            imageSrc="https://xavierferras.com/wp-content/uploads/2019/02/266-Persona.jpg"
+            text={userData.user.name}
+            imageSrc={getImage()}
           />
           <div className={styles.containerChangePictureBtn}>
-            <BasicBtn
-              size="lg"
-              backgroundColor="white"
-              fontWeight={700}
-              borderColor="var(--neutral300)"
-              colorText="var(--neutral900)"
-              text="Upload New Picture"
-            />
+          <InputFile name="image" onChange={handleImage} />
             <BasicBtn
               size="sm"
               backgroundColor="var(--red400)"
@@ -112,17 +130,16 @@ const ModalEditUser = ({ size, textHeader, user: originalUser }: ModalEditProps)
           onChange={handleChange}
           size="lg"
           type="text"
-          // defaultValue={originalUser?.name}
           textTitle="Name*"
           name='name'
           placeholder="Jose"
           value={userData.user.name}
         />
         <InputModal
+          onChange={handleChange}
           size="lg"
           type="text"
           textTitle="Last Name*"
-          onChange={handleChange}
           name='lastname'
           placeholder="Lopez"
           value={userData.user.lastname}
@@ -130,20 +147,20 @@ const ModalEditUser = ({ size, textHeader, user: originalUser }: ModalEditProps)
 
         <div className={styles.containerBirthdayPhone}>
           <InputModal
+            onChange={handleChange}
             size="md"
             type="date"
             textTitle="Birthday"
             subText=" (Optional)"
-            onChange={handleChange}
             name='birthday'
             placeholder='22 Nov 1990'
             value={userData.user.birthday}
           />
           <InputModal
+            onChange={handleChange}
             size="md"
             type="text"
             textTitle="Phone number*"
-            onChange={handleChange}
             name='phone'
             placeholder='(442) 212 2365'
             value={userData.user.phone}
@@ -154,10 +171,10 @@ const ModalEditUser = ({ size, textHeader, user: originalUser }: ModalEditProps)
       <div className={styles.accountInformation}>
         <p className={styles.title}>ACCOUNT INFORMATION</p>
         <InputModal
+          onChange={handleChange}
           size="lg"
           type="text"
           textTitle="Email*"
-          onChange={handleChange}
           name='email'
           placeholder='joss.reamirez@company.mx'
           value={userData.user.email}

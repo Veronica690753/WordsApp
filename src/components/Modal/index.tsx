@@ -4,7 +4,7 @@ import { useState, useEffect, createContext } from 'react';
 import { ModalProps } from './interface';
 
 interface ModalContextProps {
-	setIsOpenModal: React.Dispatch<React.SetStateAction<boolean>>
+	setIsOpenModal: React.Dispatch<React.SetStateAction<boolean |undefined>> 
 }
 
 export const ModalContext = createContext({} as ModalContextProps)
@@ -12,7 +12,7 @@ const { Provider } = ModalContext
 
 export const Modal = ({ children, isOpen, callback, setIsOpen }: ModalProps) => {
 
-	const [isOpenModal, setIsOpenModal] = useState<boolean>(false)
+	const [isOpenModal, setIsOpenModal] = useState<boolean | any>(false)
 
 	const handleClick = (e: MouseEvent) => {
 		const { id } = e.target as HTMLDivElement
